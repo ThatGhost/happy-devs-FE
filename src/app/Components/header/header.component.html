@@ -1,6 +1,9 @@
 <main>
   <header class="header-main">
-    <img class="brand-logo" src="/assets/dev-logo.png" alt="logo" aria-hidden="true">
+    <img class="brand-logo" src="/assets/dev-logo.png" alt="logo" aria-hidden="true" [routerLink] = "['']">
     <h1 class="brand-text">{{title}}</h1>
+    <section class="header-links">
+      <a [routerLink] = "['/profile', 0]"> Profile </a>
+    </section>
   </header>
 </main>
