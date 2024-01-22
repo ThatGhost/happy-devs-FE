@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 
-@Injectable()
+@Injectable({
+  providedIn: "root",
+})
 export class SideNavService {
   private matSidenav!: MatSidenav;
 
@@ -10,7 +12,6 @@ export class SideNavService {
   }
 
   public open() {
-    console.log("trying to open "+this.matSidenav);
     this.matSidenav.open();
   }
 

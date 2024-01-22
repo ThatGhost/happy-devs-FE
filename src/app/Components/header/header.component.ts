@@ -7,15 +7,14 @@ import { SideNavService } from '../../services/sidenav.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   imports: [RouterModule],
-  providers: [SideNavService]
 })
 export class HeaderComponent {
   title = 'Happy-devs';
 
-  constructor(private sidenav: SideNavService) 
+  constructor(private sidenavService: SideNavService) 
   { }
 
   public openSideNav() {
-    this.sidenav.open();
+    this.sidenavService.open();
   }
 }

@@ -7,7 +7,6 @@ import { SideNavService } from '../../services/sidenav.service';
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
   imports: [],
-  providers: [SideNavService]
 })
 export class SidenavComponent {
   constructor(private sidenav: SideNavService) 
