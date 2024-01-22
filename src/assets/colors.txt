@@ -1,0 +1,5 @@
+#090F2E -- dark
+#242F71 -- medium
+#7981AD -- light
+#837446 -- special
+#2E2509

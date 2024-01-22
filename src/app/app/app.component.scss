@@ -1,8 +1,11 @@
 .content {
-    height: 900px;
-    width: 95%;
-    background-image: linear-gradient(180deg, #050a2b, #14269c);
-    padding-top: 100px;
-    padding-left: 2.5%;
-    padding-right: 2.5%;
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(180deg, #09102E, #09102E, #242F71);
+    padding-top: 20px;
+}
+
+*{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: white;
 }
