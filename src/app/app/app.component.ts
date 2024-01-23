@@ -21,6 +21,5 @@ export class AppComponent {
 
   ngAfterViewInit(): void {
     this.sidenavService.setSideNav(this.sidenav);
-    console.log("init side nav " + this.sidenav);
   }
 }

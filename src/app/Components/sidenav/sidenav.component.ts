@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
 import { SideNavService } from '../../services/sidenav.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
-  imports: [],
+  imports: [RouterModule],
 })
 export class SidenavComponent {
+  profileId: number = 0;
+
   constructor(private sidenav: SideNavService) 
   { }
 

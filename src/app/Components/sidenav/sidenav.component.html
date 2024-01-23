@@ -1,16 +1,16 @@
 <section class = "navbar">
-    <img class = "closing-icon" src = "/assets/x-icon.png" (click)="closeSideNav()">
     <section class = "profile-section">
-        <img class = "profile-picture" src = "/assets/news-icon.png">
+        <img class = "closing-icon" src = "/assets/x-icon.png" (click)="closeSideNav()">
+        <img class = "profile-picture" src = "/assets/profile-icon.png">
         <h1 class = "profile-name" >ThatGhost</h1>
     </section>
     <div class = "divider"></div>
     <section class = "options">
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
+        <a [routerLink]="['profile', this.profileId]">Profile</a>
+        <a>Settings</a>    
+        <div class = "divider"></div>
+        <a>Make a post</a>
+        <a>Give advice</a>
+        <a>Check documentation</a>    
     </section>
 </section>
