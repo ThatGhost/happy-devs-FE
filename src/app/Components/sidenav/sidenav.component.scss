@@ -1,15 +1,23 @@
 .navbar {
-    background-image: linear-gradient(180deg, #09102E, #09102E, #242F71);
     padding-top: 2%;
     padding-left: 20px;
     padding-right: 10px;
-    height: 99.3%;
     width: 280px;
+    overflow-y: hidden;
+    position: relative;
 }
 
 .closing-icon {
-    height: 100%;
+    height: 30px;
     float: right;
+    margin-top: 10px;
+
+    border: 1px solid transparent;
+    border-radius: 10px;
+}
+
+.closing-icon:hover {
+    border: 1px solid #7981AD;
 }
 
 .profile-section {

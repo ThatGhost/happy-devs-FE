@@ -6,7 +6,7 @@
     </section>
     <div class = "divider"></div>
     <section class = "options">
-        <a [routerLink]="['profile', this.profileId]">Profile</a>
+        <a [routerLink]="['profile', this.profileId]" (click) = "closeSideNav()">Profile</a>
         <a>Settings</a>    
         <div class = "divider"></div>
         <a>Make a post</a>
