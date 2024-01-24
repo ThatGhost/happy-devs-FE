@@ -18,4 +18,8 @@ export class SidenavComponent {
   public closeSideNav() {
     this.sidenav.close();
   }
+
+  public openPFP() {
+    window.open("https://i.kym-cdn.com/photos/images/newsfeed/001/698/917/183.jpg", "_blank")
+  }
 }

@@ -1,9 +1,11 @@
+@import "../../styles/main";
+
 header {
     position: fixed;
     top: 0;
     height: 50px;
     width: 100%;
-    background-color: #09102E;
+    background-color: $c-dark;
     padding: 5px;
     z-index: 100;
 }
@@ -20,7 +22,7 @@ header {
 a {
     font-size: 30px;
     text-align: center;
-    color: white;
+    color: $c-white;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     text-decoration: none;
 
@@ -36,7 +38,7 @@ a {
 
 .brand-text {
     font-size: 30px;
-    color: white;
+    color: $c-white;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     float: left;
     margin: 5px 0 0 10px;

@@ -1,0 +1,17 @@
+$c-dark: #090F2E;
+$c-medium: #242F71;
+$c-light: #7981AD;
+$c-accent: #B19C50;
+$c-white: #ffffff;
+
+@mixin accent-glow {
+    border: medium solid $c-accent;
+    border-radius: 12px;
+    box-shadow: 0px 0px 10px $c-accent, inset 0px 0px 10px $c-accent;
+}
+
+@mixin light-glow {
+    border: medium solid $c-light;
+    border-radius: 12px;
+    box-shadow: 0px 0px 10px $c-light,
+}

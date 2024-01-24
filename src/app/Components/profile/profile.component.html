@@ -1,31 +1,31 @@
 <section class = "profile">
-    <section class = "profile-section">
-        <img src = "/assets/starrednight.jpg" class = "profile-starrednight">
-        <div class = "profile-top">
-            <img class = "profile-image" src="/assets/profile-icon.png">
-            <div class = "profile-nameAndTitle">
-                <h1 class = "profile-name">ThatGhost</h1>
-                <h3 class = "profile-title">Software Developer</h3>    
-            </div>    
-        </div>
-        <div class = "profile-bio">
-            <div style="display: flex; flex-direction: row;">
-                <img class = "profile-bio-icon" src = "/assets/news-icon.png">
-                <h3 class = "profile-bio-title">Bio</h3>
+    <section class = "top-grid">
+        <section class = "personal">
+            <img class = "starrednight" src = "/assets/starrednight.jpg">
+            <div class = "top">
+                <img class = "profilePicture" src="/assets/profile-icon.png">
+                <div class = "nameAndTitle">
+                    <h1 class = "name">ThatGhost</h1>
+                    <h3 class = "title">Software Developer</h3>    
+                </div>    
             </div>
-            <p class = "profile-bio-text">Hey, i am a software developer that specialises in typescript and c#. i got my passion for development from video games. when i wanted to make then i had to learn how to code. since then i was absolutly entralled and obsessed with software development and still spend countless hours developing anything i want to make</p>
-        </div>
+            <div class = "bio">
+                <div style="display: flex; flex-direction: row;">
+                    <img class = "icon" src = "/assets/news-icon.png">
+                    <h3 class = "title">Bio</h3>
+                </div>
+                <p class = "text">Hey, i am a software developer that specialises in typescript and c#. i got my passion for development from video games. when i wanted to make then i had to learn how to code. since then i was absolutly entralled and obsessed with software development and still spend countless hours developing anything i want to make</p>
+            </div>
+        </section>
+        <section class = "activity-feed">
+            <section class = "titleAndIcon">
+                <img class = "icon" src = "/assets/bell-icon.png">
+                <h3 class = "title">Activity feed</h3>
+            </section>
+            <!--activity list-->
+        </section>
     </section>
     <section class = "graph">
-        
-    </section>
-    <section class = "activity">
-        <!--here comes some sort of activity tracker in the form of a graph-->
-        <section class = "activity-feed">
-
-        </section>
-        <section class = "activity-other">
-
-        </section>
+        <app-activity-chart></app-activity-chart>
     </section>
 </section>

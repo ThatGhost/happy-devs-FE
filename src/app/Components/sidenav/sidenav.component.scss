@@ -1,10 +1,13 @@
+@import "../../styles/main";
+
 .navbar {
     padding-top: 2%;
     padding-left: 20px;
     padding-right: 10px;
     width: 280px;
-    overflow-y: hidden;
     position: relative;
+
+    overflow-y: hidden;
 }
 
 .closing-icon {
@@ -14,10 +17,10 @@
 
     border: 1px solid transparent;
     border-radius: 10px;
-}
 
-.closing-icon:hover {
-    border: 1px solid #7981AD;
+    &:hover {
+        border: 1px solid $c-light;
+    }
 }
 
 .profile-section {
@@ -46,8 +49,8 @@
 
 .divider {
     width: 100%;
-    border-bottom: 1px solid #7981AD;
-    box-shadow: 0px 0px 2px #7981AD ;
+    border-bottom: 1px solid $c-light;
+    box-shadow: 0px 0px 2px $c-light;
     border-radius: 4px;
     float: left;
 }
@@ -58,7 +61,7 @@ a {
     margin-bottom: 5px;
     margin-top: 5px;
     font-size: large;
-    color: white;
+    color: $c-white;
     text-decoration: none;
 
     border: 1px solid transparent;
@@ -68,8 +71,8 @@ a {
     padding-bottom: 3px;
     margin-left: 3%;
     margin-right: 7%;
-}
 
-a:hover {
-    border: 1px solid #7981AD;
+    &:hover {
+        border: 1px solid $c-light;
+    }
 }
