@@ -5,7 +5,7 @@
             <div class = "top">
                 <img class = "profilePicture" src="/assets/profile-icon.png">
                 <div class = "nameAndTitle">
-                    <h1 class = "name">ThatGhost</h1>
+                    <h1 class = "name">Ibn Zwanckaert</h1>
                     <h3 class = "title">Software Developer</h3>    
                 </div>    
             </div>
@@ -22,7 +22,19 @@
                 <img class = "icon" src = "/assets/bell-icon.png">
                 <h3 class = "title">Activity feed</h3>
             </section>
-            <!--activity list-->
+            <ul class = "list">
+                <li class = "item" *ngFor="let activity of activities">
+                    <div style="display: flex;
+                    flex-direction: row;">
+                        <img src = {{activity.image}}>
+                        <div class = "text">
+                            <p>{{activity.title}}</p>
+                            <a>Click here to view</a>
+                        </div>    
+                    </div>
+                    <div class = "divider"></div>
+                </li>
+            </ul>
         </section>
     </section>
     <section class = "graph">

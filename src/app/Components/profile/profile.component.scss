@@ -100,9 +100,11 @@
         .activity-feed {
             @include accent-glow;
             padding: 20px;
-
+            padding-bottom: 30px;
+            
             .titleAndIcon {
-
+                height: 10%;
+                width: 100%;
                 .icon {
                     width: 40px;
                     float: left;
@@ -113,6 +115,49 @@
                     margin-left: 5px;
                     float: left;
                 }    
+            }
+
+            .list {
+                padding-left: 20px;
+                padding-top: 10px;
+                list-style: none;
+                height: 90%;
+                @include light-glow();
+
+                .item {
+                    margin-top: 10px; 
+                    display: flex;
+                    flex-direction: column;
+
+                    img {
+                        width: 40px;
+                        height: 40px;
+                    }
+
+                    .text {
+                        display: flex;
+                        flex-direction: column;
+                        margin-left: 20px;
+
+                        p {
+                            font-size: large;
+                            margin: 0;
+                        }
+    
+                        a {
+                            font-size: small;
+                            margin-left: 10px;
+                        }
+                    }
+
+                    .divider {
+                        border-bottom: 1px solid $c-light;
+                        box-shadow: 0px 0px 5px $c-light, inset 0px 0px 5px $c-light;
+                        margin-top: 10px;
+                        margin-right: 20px;
+                        margin-left: 10px;
+                    }
+                }
             }
         }
     }
