@@ -10,22 +10,22 @@
                 <img src = "/assets/profile-icon.png">
                 <p>Username</p>    
             </div>
-            <input>
+            <input type="text" [formControl]="username">
         </div>
         <div class = "part">
             <div>
                 <img src = "/assets/at-icon.png" style="height: 25px; margin-top: 2.5px;">
                 <p>Email</p>    
             </div>
-            <input>
+            <input type="email" [formControl]="email">
         </div>
         <div class = "part">
             <div>
                 <img src = "/assets/pasword-icon.png">
                 <p>Password</p>    
             </div>
-            <input>
+            <input type="password" [formControl]="password">
         </div>
-        <button>Sign Up</button>
+        <button (click)="signUp()">Sign Up</button>
     </section>
 </section>
