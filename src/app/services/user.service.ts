@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Id } from '../app.config';
 import { HttpClient } from '@angular/common/http';
-import { Observable, firstValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,10 @@ export class UserService {
   private userId: Id = 0;
   private url: string = "https://localhost:7194/api/Users"
 
-  constructor(private readonly http: HttpClient) 
+  constructor(
+    private readonly http: HttpClient,
+    private readonly router: Router,
+  ) 
   {
     // check localStorage
   }
@@ -26,8 +30,13 @@ export class UserService {
     return this.userId;
   }
 
-  public login(email: string, password: string) {
-
+  public async login(email: string, password: string): Promise<void> {
+    this.token = (await firstValueFrom(this.http.post<{token: string}>(this.url + "/login", {
+      email: email,
+      password: password,
+    }))).token;
+    this.loggedIn = true;
+    this.router.navigateByUrl("");
   }
 
   public async signUp(UserName: string, email: string, password: string): Promise<void> {
@@ -36,6 +45,7 @@ export class UserService {
       email: email,
       password: password,
     }));
-    this.loggedIn = true;
+    await this.login(email, password);
+    this.router.navigateByUrl("profile/"+this.userId);
   }
 }
