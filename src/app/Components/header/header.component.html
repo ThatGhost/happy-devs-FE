@@ -3,7 +3,11 @@
     <img class="brand-logo" src="/assets/dev-logo.png" alt="logo" aria-hidden="true" [routerLink] = "['']">
     <h1 class="brand-text">{{title}}</h1>
     <section>
-      <img class="header-hamburger" src = "/assets/hamburger-icon.png" (click)="openSideNav()">
+      <img *ngIf = "usersService.isUserLoggedIn();" class="header-right hamburger" src = "/assets/hamburger-icon.png" (click)="openSideNav()">
+      <div *ngIf = "!usersService.isUserLoggedIn();" class="header-right login-signup">
+          <button class = "login" [routerLink]="['login']">Login</button>
+          <button class = "signup" [routerLink]="['signup']">Sign Up</button>
+      </div>
     </section>
   </header>
 </main>
