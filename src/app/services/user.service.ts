@@ -64,4 +64,11 @@ export class UserService {
     await this.login(email, password);
     this.router.navigateByUrl("profile/"+this.userId);
   }
+
+  public signOut(): void {
+    this.loggedIn = false;
+    this.userId = 0;
+    this.api.setToken('');
+    if (this.isBrowser) localStorage.removeItem(this.localStorageKey);
+  }
 }

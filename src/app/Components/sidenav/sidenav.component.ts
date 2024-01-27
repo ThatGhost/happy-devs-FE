@@ -29,6 +29,12 @@ export class SidenavComponent {
     this.closeSideNav();
   }
 
+  public signOut() {
+    this.userService.signOut()
+    this.router.navigateByUrl("");
+    this.closeSideNav();
+  }
+
   public openPFP() {
     window.open("https://i.kym-cdn.com/photos/images/newsfeed/001/698/917/183.jpg", "_blank")
   }
