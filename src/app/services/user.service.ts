@@ -1,20 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Id } from '../app.config';
-import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   private loggedIn: boolean = false;
-  private token: string = "";
   private userId: Id = 0;
-  private url: string = "https://localhost:7194/api/Users"
 
   constructor(
-    private readonly http: HttpClient,
+    private readonly api: ApiService,
     private readonly router: Router,
   ) 
   {
@@ -26,25 +23,28 @@ export class UserService {
   }
 
   public getUserId(): Id {
-    if(!this.loggedIn) throw Error("User was not logged in when trying to get user Id");
+    if(!this.loggedIn) return 0;
     return this.userId;
   }
 
   public async login(email: string, password: string): Promise<void> {
-    this.token = (await firstValueFrom(this.http.post<{token: string}>(this.url + "/login", {
+    const token: {token:string } = await this.api.post<{token: string}>('Users/login', {
       email: email,
       password: password,
-    }))).token;
+    });
+
+    this.userId = Number(token.token.substring(0, token.token.indexOf(":")));
     this.loggedIn = true;
+    this.api.setToken(token.token);
     this.router.navigateByUrl("");
   }
 
   public async signUp(UserName: string, email: string, password: string): Promise<void> {
-    this.userId = await firstValueFrom(this.http.post<Id>(this.url, {
+    this.userId = await this.api.post<Id>('Users', {
       userName: UserName,
       email: email,
       password: password,
-    }));
+    });
     await this.login(email, password);
     this.router.navigateByUrl("profile/"+this.userId);
   }

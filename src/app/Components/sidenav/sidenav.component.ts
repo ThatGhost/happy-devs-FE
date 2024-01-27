@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { SideNavService } from '../../services/sidenav.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { UserService } from '../../services/user.service';
+import { Id } from '../../app.config';
 
 @Component({
   selector: 'app-sidenav',
@@ -10,13 +12,21 @@ import { RouterModule } from '@angular/router';
   imports: [RouterModule],
 })
 export class SidenavComponent {
-  profileId: number = 0;
-
-  constructor(private sidenav: SideNavService) 
+  constructor(
+    private readonly sidenav: SideNavService,
+    private readonly userService: UserService,
+    private readonly router: Router,
+  ) 
   { }
 
   public closeSideNav() {
     this.sidenav.close();
+  }
+
+  public goToProfile() {
+    const profileId: Id = this.userService.getUserId();
+    this.router.navigateByUrl("profile/"+profileId);
+    this.closeSideNav();
   }
 
   public openPFP() {

@@ -5,8 +5,8 @@
             <div class = "top">
                 <img class = "profilePicture" src="/assets/profile-icon.png">
                 <div class = "nameAndTitle">
-                    <h1 class = "name">Ibn Zwanckaert</h1>
-                    <h3 class = "title">Software Developer</h3>    
+                    <h1 class = "name">{{profile.username}}</h1>
+                    <h3 class = "title">{{profile.title}}</h3>    
                 </div>    
             </div>
             <div class = "bio">
@@ -14,7 +14,7 @@
                     <img class = "icon" src = "/assets/news-icon.png">
                     <h3 class = "title">Bio</h3>
                 </div>
-                <p class = "text">Hey, i am a software developer that specialises in typescript and c#. i got my passion for development from video games. when i wanted to make then i had to learn how to code. since then i was absolutly entralled and obsessed with software development and still spend countless hours developing anything i want to make</p>
+                <p class = "text">{{profile.bio}}</p>
             </div>
         </section>
         <section class = "activity-feed">

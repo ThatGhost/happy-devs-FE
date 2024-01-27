@@ -30,6 +30,10 @@
             font-size: 70px;
             text-shadow: $c-white 0 0 10px;
             margin-top: 10%;
+
+            @media screen and (max-width: 600px) {
+                margin-top: 15%;
+            }
         }
 
         .message {
@@ -37,6 +41,10 @@
             font-size: 20px;
             text-shadow: $c-white 0 0 5px;
             padding-top: 2%;
+
+            @media screen and (max-width: 600px) {
+                margin-top: 5%;
+            }
         }
     }
 
@@ -48,9 +56,26 @@
         flex-direction: column;
         align-items: center;
 
+        @media screen and (max-width: 1000px) {
+            width: 75%;
+        }
+
+        @media screen and (max-width: 600px) {
+            width: 100%;
+        }
+
         .part {
             width: 50%;
             margin-bottom: 3%;
+
+            @media screen and (max-width: 1000px) {
+                width: 60%;
+            }
+
+            @media screen and (max-width: 600px) {
+                width: 75%;
+            }
+
             div {
                 margin-bottom: 1%;
                 margin-left: 3%;
