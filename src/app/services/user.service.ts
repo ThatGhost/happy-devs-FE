@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Id } from '../app.config';
 import { Router } from '@angular/router';
 import { ApiService } from './api.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +10,27 @@ import { ApiService } from './api.service';
 export class UserService {
   private loggedIn: boolean = false;
   private userId: Id = 0;
+  private isBrowser: boolean = false;
+
+  private localStorageKey = "token";
 
   constructor(
     private readonly api: ApiService,
     private readonly router: Router,
+    @Inject(PLATFORM_ID) private readonly _platformId: Object
   ) 
   {
     // check localStorage
+    this.isBrowser = isPlatformBrowser(_platformId);
+
+    if (this.isBrowser) {
+      const token: string | null = localStorage.getItem(this.localStorageKey);
+      if(token !== null) {
+        api.setToken(token);
+        this.loggedIn = true;
+        this.userId = Number(token.substring(0, token.indexOf(":")));
+      }  
+    }
   }
 
   public isUserLoggedIn(): boolean {
@@ -37,6 +52,7 @@ export class UserService {
     this.loggedIn = true;
     this.api.setToken(token.token);
     this.router.navigateByUrl("");
+    if (this.isBrowser) localStorage.setItem(this.localStorageKey, token.token);
   }
 
   public async signUp(UserName: string, email: string, password: string): Promise<void> {
