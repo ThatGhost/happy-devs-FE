@@ -2,8 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ActivityChartComponent } from '../activity-chart/activity-chart.component';
 import { CommonModule } from '@angular/common';
-import { ApiService } from '../../services/api.service';
-import { UserService } from '../../services/user.service';
+import { IProfile, ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,7 +13,9 @@ import { UserService } from '../../services/user.service';
 })
 export class ProfileComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
-  profileId = 0;
+  title: string = "";
+  username: string = "";
+  bio: string = ""
 
   activities: { title: string, image: string }[] = [
     {title: "Updated docs", image: "/assets/bell-icon.png"},
@@ -24,28 +25,20 @@ export class ProfileComponent {
     {title: "New bio!", image: "/assets/profile-icon.png"},
     {title: "Updated docs", image: "/assets/bell-icon.png"}];
 
-  profile: IProfile = {
-    username: "",
-    bio: "",
-    title: ""
-  };
-
   constructor(
-    private readonly api: ApiService,
-    private readonly userService: UserService
+    public readonly profileService: ProfileService,
   ) {
-    this.profileId = Number(this.route.snapshot.params['id']);
+    this.profileService.profileChange.subscribe((value) => {
+      this.title = value.title;
+      this.bio = value.bio;
+      this.username = value.username;
+    });
   }
 
-  async ngOnInit(): Promise<void> {
-    if (!this.userService.isUserLoggedIn()) return;
-    this.profile = await this.api.get<IProfile>("Profile/" + this.profileId);
+  async ngOnInit() {
+    const profile: IProfile = this.profileService.getProfile();
+    this.bio = profile.bio;
+    this.title = profile.title;
+    this.username = profile.username;
   }
-
-}
-
-interface IProfile {
-  bio : string,
-  username : string,
-  title : string,
 }
