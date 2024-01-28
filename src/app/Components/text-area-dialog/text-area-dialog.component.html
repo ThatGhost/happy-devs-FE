@@ -1,0 +1,5 @@
+<section class = "input-dialog">
+    <h1 class = "title">{{data.title}}</h1>
+    <textarea class = "input" #field>{{data.previousData}}</textarea>
+    <button class = "submit" (click)="onSubmit(field.value)">Submit</button>    
+</section>

@@ -112,7 +112,8 @@
                 margin-top: 20px;
                 z-index: 1;
                 height: 100%;
-            
+                position: relative;
+
                 font-size: medium;
             
                 display: flex;
@@ -133,6 +134,13 @@
                     @media screen and (max-width: 600px) {
                         display: none;
                     }            
+                }
+
+                .edit {
+                    position: absolute;
+                    right: 0;
+                    height: 30px;
+                    width: 30px;
                 }
     
                 .text {

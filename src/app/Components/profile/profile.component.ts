@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { IProfile, ProfileService } from '../../services/profile.service';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { TextInputDialogComponent } from '../text-input-dialog/text-input-dialog.component';
+import { TextAreaDialogComponent } from '../text-area-dialog/text-area-dialog.component';
 
 @Component({
   selector: 'app-profile',
@@ -79,6 +80,21 @@ export class ProfileComponent {
     dialogRef.afterClosed().subscribe(result => {
       if(result !== undefined) {
         this.title = result;
+        this.updateProfile();
+      }
+    });
+  }
+
+  public editBio() {
+    const dialogRef = this.dialog.open(TextAreaDialogComponent, {
+      data: {
+        title: "New Bio"
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result !== undefined) {
+        this.bio = result;
         this.updateProfile();
       }
     });
