@@ -32,4 +32,12 @@ export class ApiService {
       }
     }));
   }
+
+  public async put(url: string, body: object): Promise<void> {
+    await firstValueFrom(this.http.put(this.mainUrl + url, body, {
+      headers: {
+        "Authentication": this.token,
+      }
+    }));
+  }
 }

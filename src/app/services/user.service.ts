@@ -3,6 +3,7 @@ import { Id } from '../app.config';
 import { Router } from '@angular/router';
 import { ApiService } from './api.service';
 import { isPlatformBrowser } from '@angular/common';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,8 @@ export class UserService {
   private isBrowser: boolean = false;
 
   private localStorageKey = "token";
+
+  userChange: Subject<Id> = new Subject<Id>();
 
   constructor(
     private readonly api: ApiService,

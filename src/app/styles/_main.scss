@@ -4,6 +4,9 @@ $c-light: #7981AD;
 $c-accent: #B19C50;
 $c-white: #ffffff;
 
+$default-font: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+
 @mixin accent-glow {
     border: medium solid $c-accent;
     border-radius: 12px;

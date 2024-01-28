@@ -5,8 +5,14 @@
             <div class = "top">
                 <img class = "profilePicture" src="/assets/profile-icon.png">
                 <div class = "nameAndTitle">
-                    <h1 class = "name">{{username}}</h1>
-                    <h3 class = "title">{{title}}</h3>    
+                    <div class = "name">
+                        <h1 class = "text">{{username}}</h1>
+                        <img src = "/assets/edit-icon.png" class = "edit" (click)="editUsername()">
+                    </div>
+                    <div class = "title">
+                        <h3 class = "text">{{title}}</h3>    
+                        <img src = "/assets/edit-icon.png" class = "edit" (click)="editTitle()">
+                    </div>
                 </div>    
             </div>
             <div class = "bio">

@@ -52,6 +52,6 @@ export class SidenavComponent {
   }
 
   async ngOnInit() {
-    this.profileService.reloadProfile();
+    this.profileService.loadProfile();
   }
 }

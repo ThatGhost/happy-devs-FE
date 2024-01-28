@@ -3,7 +3,6 @@ import { HomeComponent } from './Components/home/home.component';
 import { ProfileComponent } from './Components/profile/profile.component';
 import { LoginComponent } from './Components/login/login.component';
 import { SignupComponent } from './Components/signup/signup.component';
-import { EditProfileComponent } from './Components/edit-profile/edit-profile.component';
 
 export const routes: Routes = [{
     path: '',
@@ -24,9 +23,4 @@ export const routes: Routes = [{
     path: 'signup',
     component: SignupComponent,
     title: 'signup'
-},
-{
-    path: 'edit-profile',
-    component: EditProfileComponent,
-    title: 'edit-profile'
 }];

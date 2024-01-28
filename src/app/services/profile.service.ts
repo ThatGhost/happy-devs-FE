@@ -23,13 +23,32 @@ export class ProfileService {
     this.profileChange.subscribe((value) => {
       this.profile = value
     });
-   }
+    userService.userChange.subscribe((value) => {
+      this.reloadProfile();
+    })
+  }
 
-    public getProfile(): IProfile {
-      return this.profile;
-    }
+  public getProfile(): IProfile {
+    return this.profile;
+  }
 
-    public async reloadProfile(): Promise<void> {
+  public async updateProfile(profile: IProfile): Promise<void> {
+    if (!this.userService.isUserLoggedIn()) return;
+
+    await this.api.put("Profile/" + this.userService.getUserId(), {
+      bio: profile.bio,
+      username: profile.username,
+      title: profile.title,
+    });
+    this.profileChange.next({
+      id: this.userService.getUserId(),
+      title: profile.title,
+      bio: profile.bio,
+      username: profile.username,
+    })
+  }
+
+  public async loadProfile(): Promise<void> {
     if (!this.userService.isUserLoggedIn()) return;
 
     if(this.profile.id === 0) {
@@ -41,6 +60,18 @@ export class ProfileService {
         username: profile.username,
       })
     }
+  }
+
+  public async reloadProfile(): Promise<void> {
+    if (!this.userService.isUserLoggedIn()) return;
+
+    const profile = await this.api.get<IProfile>("Profile/" + this.userService.getUserId());
+    this.profileChange.next({
+      id: profile.id,
+      title: profile.title,
+      bio: profile.bio,
+      username: profile.username,
+    })
   }
 }
 
