@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Console } from 'console';
 import { firstValueFrom } from 'rxjs';
@@ -21,7 +21,18 @@ export class ApiService {
     return await firstValueFrom(this.http.get<T>(this.mainUrl + url, {
       headers: {
         "Authentication": this.token,
-      }
+      },
+    }));
+  }
+
+  public async getblob(url: string): Promise<Blob> {
+    console.log(this.token);
+    return await firstValueFrom(this.http.get(this.mainUrl + url, {
+      headers: {
+        "Authentication": this.token,
+      },
+      reportProgress: false,
+      responseType: 'blob',
     }));
   }
 

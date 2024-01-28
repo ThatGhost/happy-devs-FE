@@ -16,6 +16,9 @@ export class ProfileService {
   };
   profileChange: Subject<IProfile> = new Subject<IProfile>();
 
+  profilePicture: Blob | null = null;
+  profilePictureChange: Subject<Blob | null> = new Subject<Blob | null>();
+
   constructor(
     private readonly api: ApiService,
     private readonly userService: UserService
@@ -23,8 +26,12 @@ export class ProfileService {
     this.profileChange.subscribe((value) => {
       this.profile = value
     });
+    this.profilePictureChange.subscribe((value) => {
+      this.profilePicture = value
+    });
     userService.userChange.subscribe((value) => {
       this.reloadProfile();
+      this.loadProfilePicture();
     })
   }
 
@@ -72,6 +79,13 @@ export class ProfileService {
       bio: profile.bio,
       username: profile.username,
     })
+  }
+
+  public async loadProfilePicture(): Promise<void> {
+    if (!this.userService.isUserLoggedIn()) return;
+
+    const profilePicture = await this.api.getblob(`Profile/${this.userService.getUserId()}/pfp`);
+    this.profilePictureChange.next(profilePicture);
   }
 }
 

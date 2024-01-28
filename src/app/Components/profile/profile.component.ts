@@ -6,6 +6,7 @@ import { IProfile, ProfileService } from '../../services/profile.service';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { TextInputDialogComponent } from '../text-input-dialog/text-input-dialog.component';
 import { TextAreaDialogComponent } from '../text-area-dialog/text-area-dialog.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -19,6 +20,7 @@ export class ProfileComponent {
   title: string = "";
   username: string = "";
   bio: string = ""
+  profileImage: any | null = null;
 
   activities: { title: string, image: string }[] = [
     {title: "Updated docs", image: "/assets/bell-icon.png"},
@@ -31,15 +33,25 @@ export class ProfileComponent {
   constructor(
     public readonly profileService: ProfileService,
     public readonly dialog: MatDialog,
+    private readonly sanitizer: DomSanitizer
   ) {
     this.profileService.profileChange.subscribe((value) => {
       this.title = value.title;
       this.bio = value.bio;
       this.username = value.username;
     });
+    this.profileService.profilePictureChange.subscribe((value) => {
+      if(value === null) {
+        this.profileImage = null;
+      } else {
+        let objectURL: string = URL.createObjectURL(value);
+        this.profileImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      }
+    })
   }
 
   async ngOnInit() {
+    await this.profileService.loadProfilePicture();
     const profile: IProfile = this.profileService.getProfile();
     this.bio = profile.bio;
     this.title = profile.title;

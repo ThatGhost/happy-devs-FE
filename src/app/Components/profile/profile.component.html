@@ -3,7 +3,8 @@
         <section class = "personal">
             <img class = "starrednight" src = "/assets/starrednight.jpg">
             <div class = "top">
-                <img class = "profilePicture" src="/assets/profile-icon.png">
+                <img *ngIf = "profileImage === null" class = "profilePicture" src="/assets/profile-icon.png">
+                <img *ngIf = "profileImage !== null" class = "profilePicture" [src] = "profileImage">
                 <div class = "nameAndTitle">
                     <div class = "name">
                         <h1 class = "text">{{username}}</h1>
