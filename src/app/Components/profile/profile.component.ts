@@ -7,6 +7,7 @@ import { MatDialogModule, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angu
 import { TextInputDialogComponent } from '../text-input-dialog/text-input-dialog.component';
 import { TextAreaDialogComponent } from '../text-area-dialog/text-area-dialog.component';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ActivityService, IActivity } from '../../services/activity.service';
 
 @Component({
   selector: 'app-profile',
@@ -24,18 +25,13 @@ export class ProfileComponent {
   bio: string = ""
   profileImage: any | null = null;
 
-  activities: { title: string, image: string }[] = [
-    {title: "Updated docs", image: "/assets/bell-icon.png"},
-    {title: "Awnsered question", image: "/assets/news-icon.png"},
-    {title: "New bio!", image: "/assets/profile-icon.png"},
-    {title: "New bio!", image: "/assets/profile-icon.png"},
-    {title: "New bio!", image: "/assets/profile-icon.png"},
-    {title: "Updated docs", image: "/assets/bell-icon.png"}];
+  activities: IActivity[] = [];
 
   constructor(
-    public readonly profileService: ProfileService,
-    public readonly dialog: MatDialog,
-    private readonly sanitizer: DomSanitizer
+    private readonly profileService: ProfileService,
+    private readonly dialog: MatDialog,
+    private readonly sanitizer: DomSanitizer,
+    private readonly activityService: ActivityService,
   ) {
     this.profileService.profileChange.subscribe((value) => {
       this.title = value.title;
@@ -49,7 +45,7 @@ export class ProfileComponent {
         let objectURL: string = URL.createObjectURL(value);
         this.profileImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
       }
-    })
+    });
   }
 
   async ngOnInit() {
@@ -58,6 +54,7 @@ export class ProfileComponent {
     this.bio = profile.bio;
     this.title = profile.title;
     this.username = profile.username;
+    this.activities = await this.activityService.getActivity();
   }
 
   public updateProfile() {
