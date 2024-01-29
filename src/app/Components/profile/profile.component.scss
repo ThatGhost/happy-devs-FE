@@ -53,58 +53,70 @@
                     margin-top: 7%;
                 }        
     
-                .profilePicture {
+                .pictureContainer {
                     height: 100%;
                     min-width: 15%;
                     margin-left: 5%;
                     margin-right: 2%;
+                    position: relative;
 
-                    border: 5px solid $c-light;
-                    border-radius: 15px;
+                    .profilePicture {
+                        height: 100%;
+                        border: 5px solid $c-light;
+                        border-radius: 15px;
 
-                    ::after {
-                        content: "";
-                        display: block;
-                        padding-left: 100%;
+                        ::after {
+                            content: "";
+                            display: block;
+                            padding-left: 100%;
+                        }
+                    }
+
+                    .edit {
+                        height: 20px;
+                        width: 20px;
+                        position: absolute;
+                        padding: 5px;
+                        border-radius: 10px;
+                        border: 1px solid $c-dark;
+                        background-color: $c-light;
+                        bottom: -20px;
+                        right: -20px;
+
+                        img {
+                            height: 100%;
+                            width: 100%;
+                        }
+
+                        input {
+                            visibility: hidden;
+                        }
                     }
                 }
     
                 .nameAndTitle {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
+                    position: relative;
+                    min-height: 30px;
+                    padding-top: 3%;
                     
-                    .name {
-                        position: relative;
-                        min-height: 30px;
-
-                        .text {
-                            font-size: 50px;
-                        }
-
-                        .edit {
-                            height: 20px;
-                            position: absolute;
-                            bottom: 0;
-                            right: -20px;
-                        }
+                    .username {
+                        font-size: 50px;
                     }
-    
+
                     .title {
-                        position: relative;
-                        min-height: 30px;
+                        font-size: medium;
                         margin-left: 20px;
+                    }
 
-                        .text {
-                            font-size: medium;
-                        }
-
-                        .edit {
-                            height: 20px;
-                            position: absolute;
-                            bottom: 0;
-                            right: -20px;
-                        }
+                    .edit {
+                        height: 20px;
+                        position: absolute;
+                        top: 5px;
+                        right: -20px;
+                        padding: 5px;
+                        border-radius: 10px;
+                        border: 1px solid $c-dark;
+                        background-color: $c-light;
                     }
                 }
             }
@@ -142,8 +154,12 @@
                 .edit {
                     position: absolute;
                     right: 0;
-                    height: 30px;
-                    width: 30px;
+                    height: 20px;
+                    width: 20px;
+                    padding: 5px;
+                    border-radius: 10px;
+                    border: 1px solid $c-dark;
+                    background-color: $c-light;
                 }
     
                 .text {

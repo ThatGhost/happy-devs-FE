@@ -3,17 +3,18 @@
         <section class = "personal">
             <img class = "starrednight" src = "/assets/starrednight.jpg">
             <div class = "top">
-                <img *ngIf = "profileImage === null" class = "profilePicture" src="/assets/profile-icon.png">
-                <img *ngIf = "profileImage !== null" class = "profilePicture" [src] = "profileImage">
+                <div class = "pictureContainer">
+                    <img *ngIf = "profileImage === null" class = "profilePicture" src="/assets/profile-icon.png">
+                    <img *ngIf = "profileImage !== null" class = "profilePicture" [src] = "profileImage">
+                    <div class = "edit">
+                        <img src = "/assets/edit-icon.png" (click)="editProfilePicture()">
+                        <input type="file" #fileInput (change)="uploadProfilePicture()">
+                    </div>
+                </div>
                 <div class = "nameAndTitle">
-                    <div class = "name">
-                        <h1 class = "text">{{username}}</h1>
+                        <h1 class = "username">{{username}}</h1>
+                        <h3 class = "title">{{title}}</h3>    
                         <img src = "/assets/edit-icon.png" class = "edit" (click)="editUsername()">
-                    </div>
-                    <div class = "title">
-                        <h3 class = "text">{{title}}</h3>    
-                        <img src = "/assets/edit-icon.png" class = "edit" (click)="editTitle()">
-                    </div>
                 </div>    
             </div>
             <div class = "bio">

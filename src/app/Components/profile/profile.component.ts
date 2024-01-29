@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, Inject, Input, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ActivityChartComponent } from '../activity-chart/activity-chart.component';
 import { CommonModule } from '@angular/common';
 import { IProfile, ProfileService } from '../../services/profile.service';
-import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { MatDialogModule, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TextInputDialogComponent } from '../text-input-dialog/text-input-dialog.component';
 import { TextAreaDialogComponent } from '../text-area-dialog/text-area-dialog.component';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -16,6 +16,8 @@ import { DomSanitizer } from '@angular/platform-browser';
   imports: [ActivityChartComponent, CommonModule, MatDialogModule]
 })
 export class ProfileComponent {
+  @ViewChild('fileInput') fileInput!: ElementRef<Input>;
+
   route: ActivatedRoute = inject(ActivatedRoute);
   title: string = "";
   username: string = "";
@@ -68,30 +70,17 @@ export class ProfileComponent {
   }
 
   public editUsername() {
-    const dialogRef = this.dialog.open(TextInputDialogComponent, {
+    const dialogRef = this.dialog.open(UserNameAndTitleInput, {
       data: {
-        title: "New username"
+        username: this.username,
+        title: this.title,
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if(result !== undefined) {
-        this.username = result;
-        this.updateProfile();
-      }
-    });
-  }
-
-  public editTitle() {
-    const dialogRef = this.dialog.open(TextInputDialogComponent, {
-      data: {
-        title: "New title"
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if(result !== undefined) {
-        this.title = result;
+        this.username = result.username;
+        this.title = result.title;
         this.updateProfile();
       }
     });
@@ -109,6 +98,85 @@ export class ProfileComponent {
         this.bio = result;
         this.updateProfile();
       }
+    });
+  }
+
+  public editProfilePicture() {
+    let element: HTMLElement = this.fileInput.nativeElement as HTMLElement;
+    element.click();
+  }
+
+  public uploadProfilePicture() {
+    const element = event?.currentTarget as HTMLInputElement;
+    const pfp: File | null = element.files?.item(0) ?? null;
+    if(pfp === null) return;
+
+    let objectURL: string = URL.createObjectURL(pfp as Blob);
+    this.profileImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+
+    this.profileService.uploadProfilePicture(pfp);
+  }
+}
+
+@Component({
+  standalone: true,
+  template: `
+  <section class = "input-dialog">
+    <h2 class = "title">Username</h2>
+    <textarea class = "input" #username>{{data.username}}</textarea>
+    <h2 class = "title">title</h2>
+    <textarea class = "input" #title>{{data.title}}</textarea>
+    <button class = "submit" (click)="onSubmit(username.value, title.value)">Submit</button>    
+</section>`,
+  styles: `
+    @import "../../styles/main";
+
+    .input-dialog {
+      background-color: $c-medium;
+      min-height: 100px;
+      min-width: 250px;
+      border: 5px solid $c-light;
+      border-radius: 5px;
+      position: relative;
+
+      padding: 20px;
+
+      .title {
+          color: $c-white;
+      }
+
+      .input {
+          width: 75%;
+          margin-right: 5px;
+          background-color: $c-dark;
+          color: $c-white;
+          font-size: large;
+          font-family:$default-font;
+      }
+
+      .submit {
+          position: absolute;
+          height: 20%;
+          background-color: $c-dark;
+          @include light-glow;
+          color: $c-white;
+          padding: 5px;
+          bottom: 10px;
+          right: 10px;
+      }
+  }
+  `
+})
+class UserNameAndTitleInput {
+  constructor(private dialogRef: MatDialogRef<TextInputDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { title: string, username: string }){
+
+  }
+
+  onSubmit(username: string, title: string) {
+    this.dialogRef.close({
+      username: username,
+      title: title,
     });
   }
 }

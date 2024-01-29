@@ -87,6 +87,12 @@ export class ProfileService {
     const profilePicture = await this.api.getblob(`Profile/${this.userService.getUserId()}/pfp`);
     this.profilePictureChange.next(profilePicture);
   }
+
+  public async uploadProfilePicture(pfp: File): Promise<void> {
+    if (!this.userService.isUserLoggedIn()) return;
+
+    await this.api.putBlob(`Profile/${this.userService.getUserId()}/pfp`, pfp);
+  }
 }
 
 export interface IProfile {

@@ -51,4 +51,14 @@ export class ApiService {
       }
     }));
   }
+
+  public async putBlob(url: string, file: File): Promise<void> {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    await firstValueFrom(this.http.put(this.mainUrl + url, formData, {
+      headers: {
+        "Authentication": this.token,
+      },
+    }));
+  }
 }
