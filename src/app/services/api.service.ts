@@ -17,7 +17,6 @@ export class ApiService {
   }
 
   public async get<T>(url: string): Promise<T> {
-    console.log(this.token);
     return await firstValueFrom(this.http.get<T>(this.mainUrl + url, {
       headers: {
         "Authentication": this.token,
@@ -26,7 +25,6 @@ export class ApiService {
   }
 
   public async getblob(url: string): Promise<Blob> {
-    console.log(this.token);
     return await firstValueFrom(this.http.get(this.mainUrl + url, {
       headers: {
         "Authentication": this.token,

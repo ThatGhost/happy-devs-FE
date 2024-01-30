@@ -8,6 +8,8 @@ import { TextInputDialogComponent } from '../text-input-dialog/text-input-dialog
 import { TextAreaDialogComponent } from '../text-area-dialog/text-area-dialog.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivityService, IActivity } from '../../services/activity.service';
+import _, { min, random } from 'lodash';
+import { areDatesEqual, getDateString } from '../../utils/dateUtils';
 
 @Component({
   selector: 'app-profile',
@@ -18,6 +20,7 @@ import { ActivityService, IActivity } from '../../services/activity.service';
 })
 export class ProfileComponent {
   @ViewChild('fileInput') fileInput!: ElementRef<Input>;
+  @ViewChild('chart') chart!: ElementRef<ActivityChartComponent>;
 
   route: ActivatedRoute = inject(ActivatedRoute);
   title: string = "";
@@ -55,6 +58,27 @@ export class ProfileComponent {
     this.title = profile.title;
     this.username = profile.username;
     this.activities = await this.activityService.getActivity();
+    this.updateChart();
+  }
+
+  private updateChart() {
+    const now: Date = new Date();
+    let minDate: Date = now;
+    minDate.setDate(minDate.getDate() - 30);
+    const allDates: string[] = [];
+    const allData: number[] = [];
+
+    let currentDate: Date = minDate;
+    let i: number = 0;
+    while(!areDatesEqual(currentDate, now) || i < 20) {
+      allDates.push(getDateString(currentDate))
+      allData.push(random() * 20);
+
+      currentDate.setDate(currentDate.getDate() + 1);
+      i++;
+    }
+    this.chart.nativeElement.data = allData;
+    this.chart.nativeElement.labels = allDates;
   }
 
   public updateProfile() {
