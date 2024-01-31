@@ -1,5 +1,5 @@
 import { Component, ElementRef, Inject, Input, ViewChild, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ActivityChartComponent } from '../activity-chart/activity-chart.component';
 import { CommonModule } from '@angular/common';
 import { IProfile, ProfileService } from '../../services/profile.service';
@@ -16,11 +16,11 @@ import { areDatesEqual, getDateString } from '../../utils/dateUtils';
   standalone: true,
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
-  imports: [ActivityChartComponent, CommonModule, MatDialogModule]
+  imports: [ActivityChartComponent, CommonModule, MatDialogModule, RouterModule]
 })
 export class ProfileComponent {
   @ViewChild('fileInput') fileInput!: ElementRef<Input>;
-  @ViewChild('chart') chart!: ElementRef<ActivityChartComponent>;
+  @ViewChild('graphElement') chart!: ActivityChartComponent;
 
   route: ActivatedRoute = inject(ActivatedRoute);
   title: string = "";
@@ -56,29 +56,41 @@ export class ProfileComponent {
     const profile: IProfile = this.profileService.getProfile();
     this.bio = profile.bio;
     this.title = profile.title;
-    this.username = profile.username;
+    this.username = profile.username;  
+    await this.getActivities();  
+  }
+
+  private async getActivities() {
     this.activities = await this.activityService.getActivity();
     this.updateChart();
+    this.activities = _.orderBy(this.activities, a => a.at, "desc");
+
+    const maxActivies: number = 7;
+    if(this.activities.length > maxActivies) {
+      this.activities.splice(maxActivies - this.activities.length, this.activities.length - maxActivies);
+    }
   }
 
   private updateChart() {
     const now: Date = new Date();
-    let minDate: Date = now;
-    minDate.setDate(minDate.getDate() - 30);
-    const allDates: string[] = [];
+    now.setDate(now.getDate() + 1);
+    let minDate: Date = new Date(now);
+    minDate.setDate(minDate.getDate() - 7);
+    const allLabels: string[] = [];
     const allData: number[] = [];
 
     let currentDate: Date = minDate;
     let i: number = 0;
-    while(!areDatesEqual(currentDate, now) || i < 20) {
-      allDates.push(getDateString(currentDate))
-      allData.push(random() * 20);
+    while(!areDatesEqual(currentDate, now)) {
+      allLabels.push(getDateString(currentDate))
+      //allData.push(_.random(true) * 15);
+      allData.push(_.filter(this.activities, a => areDatesEqual(a.at, currentDate)).length);
 
       currentDate.setDate(currentDate.getDate() + 1);
       i++;
     }
-    this.chart.nativeElement.data = allData;
-    this.chart.nativeElement.labels = allDates;
+    this.chart.updateChart(allLabels, allData);
+    return;
   }
 
   public updateProfile() {
@@ -90,7 +102,7 @@ export class ProfileComponent {
     });
   }
 
-  public editUsername() {
+  public async editUsernameAndTitle() {
     const dialogRef = this.dialog.open(UserNameAndTitleInput, {
       data: {
         username: this.username,

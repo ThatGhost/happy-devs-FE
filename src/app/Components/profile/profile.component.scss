@@ -213,7 +213,7 @@
                 height: 90%;
                 @include light-glow();
 
-                overflow-y: scroll;
+                overflow-y: auto;
 
                 .item {
                     margin-top: 10px; 
@@ -238,6 +238,8 @@
                         a {
                             font-size: small;
                             margin-left: 10px;
+                            color: $c-white;
+                            text-decoration: none;
                         }
                     }
 

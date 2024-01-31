@@ -4,5 +4,5 @@ export function areDatesEqual(date1: Date, date2: Date): boolean {
 }
 
 export function getDateString(date: Date): string {
-    return `${date.getDate() > 10 ? date.getDate() : "0" + date.getDate()}/${date.getMonth() > 10 ? date.getMonth() : "0" + date.getMonth()}`;
+    return `${date.getDate() > 10 ? date.getDate() : "0" + date.getDate()}/${date.getMonth() > 9 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1)}`;
 }

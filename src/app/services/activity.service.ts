@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { UserService } from './user.service';
+import { Id } from '../app.config';
 
 @Injectable({
   providedIn: 'root'
@@ -19,27 +20,30 @@ export class ActivityService {
     if (!this.userService.isUserLoggedIn()) return [];
 
     const activityData: IActivityData[] = await this.api.get<IActivityData[]>(`Activity/${this.userService.getUserId()}`);
-    const parsed: {type: ActivityType, at: Date}[] = activityData.map(data => {
+    const parsed: {type: ActivityType, at: Date, id: Id}[] = activityData.map(data => {
       return {
         type: data.type as ActivityType,
-        at: new Date(data.at)
+        at: new Date(data.at),
+        id: this.userService.getUserId(),
       }
     });
     return parsed.map(this.toActivity);
   }
 
-  private toActivity(data: {type: ActivityType, at: Date}): IActivity {
+  private toActivity(data: {type: ActivityType, at: Date, id: Id}): IActivity {
     const activity: IActivity = {
       type: data.type,
       at: data.at,
       title: "",
       image: "",
+      link: "",
     }
 
     switch(activity.type) {
       case ActivityType.UpdatedProfile: 
         activity.title = "Updated Profile!";
         activity.image = "/assets/profile-icon.png";
+        activity.link = `/profile/${data.id}`;
         break;
     }
     
@@ -65,4 +69,5 @@ export interface IActivity {
   at: Date,
   title: string,
   image: string,
+  link: string,
 }

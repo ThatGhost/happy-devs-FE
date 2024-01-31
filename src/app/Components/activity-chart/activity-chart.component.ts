@@ -1,7 +1,7 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { ChartConfiguration, ChartOptions } from "chart.js";
-import { NgChartsModule } from 'ng2-charts';
+import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 
 @Component({
   selector: 'app-activity-chart',
@@ -11,20 +11,35 @@ import { NgChartsModule } from 'ng2-charts';
   imports: [NgChartsModule, CommonModule],
 })
 export class ActivityChartComponent {
-	public labels: string[] = [];
-	public data: number[] = [];
-
+	@ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 	public isBrowser: boolean;
-
+	
 	constructor(@Inject(PLATFORM_ID) platformId: Object) {
   		this.isBrowser = isPlatformBrowser(platformId);
 	}
 
+	public updateChart(labels: string[], data: number[]) {
+		this.lineChartData.labels = labels;
+		this.lineChartData.datasets = [
+			{
+			  data: data,
+			  label: 'activity',
+			  fill: false,
+			  tension: 0.5,
+			  borderColor: '#7981AD',
+			  pointBorderColor: '#7981AD',
+			  pointBackgroundColor: '#2E2509',
+			  pointHoverBackgroundColor: '#837446'
+			}
+		];
+		this.chart?.update();
+	}
+
 	public lineChartData: ChartConfiguration<'line'>['data'] = {
-		labels: this.labels,
+		labels: [],
 		datasets: [
 		  {
-			data: this.data,
+			data: [],
 			label: 'activity',
 			fill: false,
 			tension: 0.5,
@@ -41,7 +56,6 @@ export class ActivityChartComponent {
 		scales: {
 			y: {
 				min: 0,
-				max: 20,
 				bounds: "data"
 			}
 		}
