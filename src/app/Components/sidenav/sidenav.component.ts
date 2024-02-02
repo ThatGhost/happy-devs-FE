@@ -37,8 +37,9 @@ export class SidenavComponent {
     this.closeSideNav();
   }
 
-  public editProfile() {
-    const s = "edit-profile";
+  public goToMakePost() {
+    this.router.navigateByUrl("create-post");
+    this.closeSideNav(); 
   }
 
   public signOut() {

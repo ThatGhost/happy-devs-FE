@@ -4,6 +4,7 @@
     height: 100%;
     width: 100%;
     background-image: linear-gradient(180deg, $c-dark 66%, $c-medium);
+    min-height: 100svh;
 }
 
 .sidenav {
