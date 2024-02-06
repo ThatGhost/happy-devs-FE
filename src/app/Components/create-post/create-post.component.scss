@@ -54,6 +54,18 @@
             background-color: transparent;
             @include accent-glow;
         }
+
+        .cancel {
+            width: 10%;
+            height: 5%;
+            min-height: 20px;
+            min-width: 30px;
+            margin-top: 1%;
+            color: $c-white;
+            background-color: transparent;
+            @include light-glow;
+            margin-left: 5px;
+        }
     }
 
     .other-posts {

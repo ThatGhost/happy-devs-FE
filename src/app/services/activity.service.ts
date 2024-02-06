@@ -45,6 +45,11 @@ export class ActivityService {
         activity.image = "/assets/profile-icon.png";
         activity.link = `/profile/${data.id}`;
         break;
+      case ActivityType.MadePost: 
+        activity.title = "Made Post!";
+        activity.image = "/assets/news-icon.png";
+        activity.link = ``;
+        break;
     }
     
     return activity;

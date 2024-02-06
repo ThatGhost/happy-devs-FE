@@ -4,6 +4,7 @@ import { Id } from '../../app.config';
 import { CommonModule } from '@angular/common';
 import { IProfile, ProfileService } from '../../services/profile.service';
 import _ from 'lodash';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-post',
@@ -21,6 +22,7 @@ export class CreatePostComponent {
   public constructor(
     private readonly postService: PostService,
     private readonly profileService: ProfileService,
+    private readonly router: Router,
     ) {
 
   }
@@ -32,6 +34,10 @@ export class CreatePostComponent {
   public async savePost(title: string, content: string) {
     const id: Id = await this.postService.makePost(title, content);
     console.log(id);
+  }
+
+  public cancelPost() {
+    this.router.navigateByUrl("");
   }
 
   private async getRecentPosts() {

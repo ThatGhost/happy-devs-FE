@@ -5,6 +5,7 @@
         <h2 style = "margin-top: 1%;">Post</h2>
         <textarea #content class = "content" maxlength="2000"></textarea>
         <button class = "save" (click)="savePost(title.value, content.value)">Ask</button>    
+        <button class = "cancel" (click)="cancelPost()">Cancel</button>    
     </section>
     <section class = "other-posts">
         <h2>Recent posts</h2>
