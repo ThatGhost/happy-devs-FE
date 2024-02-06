@@ -93,6 +93,12 @@ export class ProfileService {
 
     await this.api.putBlob(`Profile/${this.userService.getUserId()}/pfp`, pfp);
   }
+
+  public async getProfiles(ids: Id[]): Promise<IProfile[]> {
+    if (!this.userService.isUserLoggedIn()) return [];
+
+    return await this.api.post<IProfile[]>("Profile/list", ids);
+  }
 }
 
 export interface IProfile {

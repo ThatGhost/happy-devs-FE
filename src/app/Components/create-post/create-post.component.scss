@@ -1,7 +1,7 @@
 @import "../../styles/main";
 
 .create-post {
-    padding-top: 5%;
+    padding-top: 70px;
     padding-left: 5%;
     padding-right: 5%;
 
@@ -58,5 +58,47 @@
 
     .other-posts {
         width: 20%;
+
+        ul {
+           list-style-type: none;
+           
+            li {
+
+                .top {
+                    display: flex;
+                    flex-direction: row;
+                    .left {
+                        width: 70%;
+                        overflow: hidden;
+                    }
+
+                    h3 {
+                        margin: 0;
+                        font-size: larger;
+                        white-space: nowrap;
+                    }
+
+                    h4 {
+                        margin: 0;
+                        font-size: 13px;
+                        white-space: nowrap;
+                    }
+    
+                    p {
+                        width: 30%;
+                        margin: 0;
+                        text-align: end;
+                    }
+                }
+
+                .divider {
+                    margin-bottom: 5px;
+                    width: 100%;
+                    border-bottom: 1px solid $c-light;
+                    box-shadow: 0px 0px 2px $c-light;
+                    border-radius: 4px;
+                }
+            }
+        }
     }
 }
