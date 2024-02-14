@@ -1,26 +1,22 @@
 <section class = "root">
     <section class = "post">
-        <h1>{{thisPostUserName}} {{this.thisPost.at}}</h1>
-        <h2 #title type="text" class = "title" max="256">{{thisPost.title}}</h2>
-        <p #content class = "content" maxlength="2000">{{thisPost.content}}</p>
+        <h1>{{thisPostUser.username}} - {{this.thisPost.at}}</h1>
+        <h2 type="text" class = "title" max="256">{{thisPost.title}}</h2>
+        <p class = "content">{{thisPost.content}}</p>
         <h3>Comments</h3>
         <section class = "comments">
-
+            <div *ngIf = '!writingComment' class = "comment-button">
+                <button (click)="addComment()"></button>
+                <img src = "/assets/comment-icon.png">
+            </div>
+            <div *ngIf = 'writingComment' class = "comment">
+                <textarea #commentArea (input)="onTextAreChange()" maxlength="2000">Your comment here</textarea>
+                <div class = "buttons">
+                    <button class = "save" (click)="saveComment()">Save</button>
+                    <button class = "cancel" (click)="cancelComment()">Cancel</button>
+                </div>
+            </div>
         </section>
     </section>
-    <section class = "other-posts">
-        <h2>Recent posts</h2>
-        <ul>
-            <li *ngFor="let post of displayPosts">
-                <div class = "top" (click)="goToPost(post.id)">
-                    <div class = "left">
-                        <h3>{{post.title}}</h3>
-                        <h4>{{post.username}}</h4>
-                    </div>
-                    <p>{{post.at}}</p>    
-                </div>
-                <div class = "divider"></div>
-            </li>
-        </ul>
-    </section>
+    <app-recent-posts class = "app-recent-posts"></app-recent-posts>
 </section>

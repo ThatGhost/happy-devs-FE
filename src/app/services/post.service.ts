@@ -55,7 +55,8 @@ export class PostService {
       userId: data.userId,
       title: data.title,
       at: getDateString(atDate),
-      content: data.content ?? ""
+      content: data.content ?? "",
+      comments: data.comments,
     }
   }
 }
@@ -69,6 +70,14 @@ interface IPostMinimalData {
 
 interface IPostData extends IPostMinimalData {
   content: string | null,
+  comments: IPostCommentData[],
+}
+
+interface IPostCommentData {
+  id: Id,
+  userId: Id,
+  at: string,
+  content: string,
 }
 
 export interface IPostMinimal {
@@ -79,5 +88,13 @@ export interface IPostMinimal {
 }
 
 export interface IPost extends IPostMinimal {
+  content: string,
+  comments: IPostComment[]
+}
+
+export interface IPostComment {
+  id: Id,
+  userId: Id,
+  at: string,
   content: string,
 }

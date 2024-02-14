@@ -1,33 +1,31 @@
-import { Component, inject } from '@angular/core';
-import { IPost, IPostMinimal, PostService } from '../../services/post.service';
-import { Id } from '../../app.config';
+import { Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { IPost, PostService } from '../../services/post.service';
 import { CommonModule } from '@angular/common';
 import { IProfile, ProfileService } from '../../services/profile.service';
 import _ from 'lodash';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { RecentPostsComponent } from '../recent-posts/recent-posts.component';
 
 @Component({
   selector: 'app-post',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RecentPostsComponent],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss'
 })
 export class PostComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
   public thisPost!: IPost;
-  public thisPostUserName!: string;
+  public thisPostUser!: IProfile;
 
-  public posts: IPostMinimal[] = [];
-  public postUsers: IProfile[] = [];
+  public writingComment: boolean = true;
 
-  public displayPosts: Array<IPostMinimal & {username: string}> = [];
+  @ViewChild('commentArea') commentTextArea!: ElementRef;
 
   public constructor(
     private readonly postService: PostService,
     private readonly profileService: ProfileService,
-    private readonly router: Router,
     ) {
 
   }
@@ -35,27 +33,24 @@ export class PostComponent {
   async ngOnInit() {
     const postId = Number((await firstValueFrom(this.route.paramMap)).get('id'));
     this.thisPost = await this.postService.getPost(postId);
-    await this.getRecentPosts();
-    this.thisPostUserName = this.getUserFromPostUsers(this.thisPost.userId);
+    this.thisPostUser = (await this.profileService.getProfiles([this.thisPost.userId]))[0];
   }
 
-  private async getRecentPosts() {
-    this.posts = await this.postService.getRecentPosts();
-    this.postUsers = await this.profileService.getProfiles(_.uniq(this.posts.map(p => p.userId)).concat([this.thisPost.userId]));
-    this.displayPosts = this.posts.map(p => {
-      return {
-        ...p,
-        username: this.getUserFromPostUsers(p.userId)
-      }
-    })
+  onTextAreChange() {
+    const element = this.commentTextArea.nativeElement as HTMLTextAreaElement;
+    element.style.height = `auto`;
+    element.style.height = `${element.scrollHeight}px`;
   }
 
-  private getUserFromPostUsers(id: Id): string {
-    return this.postUsers.find(p => p.id == id)?.username ?? "user not found";
+  addComment() {
+    this.writingComment = true;
   }
 
-  public async goToPost(id: Id) {
-    await this.router.navigateByUrl("post/"+id);
-    window.location.reload();
+  cancelComment() {
+    this.writingComment = false;
+  }
+
+  saveComment() {
+    this.writingComment = false;
   }
 }

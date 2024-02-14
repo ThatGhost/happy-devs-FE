@@ -3,7 +3,7 @@
 .root {
     padding-top: 70px;
     padding-left: 5%;
-    padding-right: 5%;
+    padding-right: 2%;
 
     height: 80svh;
 
@@ -11,13 +11,17 @@
     flex-direction: row;
 
     .post {
-        width: 75%;
-        margin-right: 5%;
+        width: 78%;
+        margin-right: 2%;
         height: 100%;
         position: relative;
         @include accent-glow;
         padding: 1%;
 
+        @media screen and (max-width: 1000px) {
+            width: 100%;
+        }
+    
         h2 {
             margin: 0;
             height: 5%;
@@ -55,57 +59,67 @@
             @include light-glow;
 
             padding: 10px;
-        }
-    }
 
-    .other-posts {
-        width: 20%;
+            .comment-button {
+                height: 30px;
+                width: 30px;
+                position: relative;
 
-        @media screen and (max-width: 1000px) {
-            display: none;
-            width: 0%;
-        }
-
-        ul {
-           list-style-type: none;
-           
-            li {
-
-                .top {
-                    display: flex;
-                    flex-direction: row;
-                    .left {
-                        width: 70%;
-                        overflow: hidden;
-                    }
-
-                    h3 {
-                        margin: 0;
-                        font-size: larger;
-                        white-space: nowrap;
-                    }
-
-                    h4 {
-                        margin: 0;
-                        font-size: 13px;
-                        white-space: nowrap;
-                    }
-    
-                    p {
-                        width: 30%;
-                        margin: 0;
-                        text-align: end;
-                    }
+                button {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background-color: transparent;
+                    border: 0;
                 }
 
-                .divider {
-                    margin-bottom: 5px;
+                img {
+                    height: 100%;
                     width: 100%;
-                    border-bottom: 1px solid $c-light;
-                    box-shadow: 0px 0px 2px $c-light;
-                    border-radius: 4px;
+                }
+            }
+
+            .comment {
+                width: 100%;
+
+                textarea {
+                    width: 98%;
+                    @include accent-left;
+                    background-color: $c-dark;
+                    color: $c-white;
+                    padding: 1%;
+                    overflow: auto;
+                    resize: none;
+                    height: auto;
+                }
+
+                .buttons {
+                    display: flex;
+                    justify-content: end;
+
+                    button {
+                        width: 10%;
+                        height: 25px;
+                        color: $c-white;
+                        background-color: $c-dark;
+                        margin-left: 5px;
+                    }
+
+                    .save {
+                        @include accent-glow; 
+                    }
+
+                    .cancel {
+                        @include light-glow;
+                    }
                 }
             }
         }
+    }
+
+    .app-recent-posts {
+        width: 20%;
     }
 }

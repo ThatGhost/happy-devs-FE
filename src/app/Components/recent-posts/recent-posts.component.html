@@ -1,0 +1,15 @@
+<section class = "other-posts">
+    <h2>Recent posts</h2>
+    <ul>
+        <li *ngFor="let post of displayPosts">
+            <div class = "top" (click)="goToPost(post.id)">
+                <div class = "left">
+                    <h3>{{post.title}}</h3>
+                    <h4>{{post.username}}</h4>
+                </div>
+                <p>{{post.at}}</p>    
+            </div>
+            <div class = "divider"></div>
+        </li>
+    </ul>
+</section>

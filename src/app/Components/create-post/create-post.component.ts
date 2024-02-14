@@ -5,19 +5,16 @@ import { CommonModule } from '@angular/common';
 import { IProfile, ProfileService } from '../../services/profile.service';
 import _ from 'lodash';
 import { Router } from '@angular/router';
+import { RecentPostsComponent } from '../recent-posts/recent-posts.component';
 
 @Component({
   selector: 'app-create-post',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RecentPostsComponent],
   templateUrl: './create-post.component.html',
   styleUrl: './create-post.component.scss'
 })
 export class CreatePostComponent {
-  public posts: IPostMinimal[] = [];
-  public postUsers: IProfile[] = [];
-
-  public displayPosts: Array<IPostMinimal & {username: string}> = [];
 
   public constructor(
     private readonly postService: PostService,
@@ -27,10 +24,6 @@ export class CreatePostComponent {
 
   }
 
-  async ngOnInit() {
-    await this.getRecentPosts();
-  }
-
   public async savePost(title: string, content: string) {
     const id: Id = await this.postService.makePost(title, content);
     console.log(id);
@@ -38,24 +31,5 @@ export class CreatePostComponent {
 
   public cancelPost() {
     this.router.navigateByUrl("");
-  }
-
-  private async getRecentPosts() {
-    this.posts = await this.postService.getRecentPosts();
-    this.postUsers = await this.profileService.getProfiles(_.uniq(this.posts.map(p => p.userId)));
-    this.displayPosts = this.posts.map(p => {
-      return {
-        ...p,
-        username: this.getUserFromPostUsers(p.userId)
-      }
-    })
-  }
-
-  private getUserFromPostUsers(id: Id): string {
-    return this.postUsers.find(p => p.id == id)?.username ?? "user not found";
-  }
-
-  public goToPost(id: Id) {
-    this.router.navigateByUrl("post/"+id);
   }
 }
