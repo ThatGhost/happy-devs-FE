@@ -1,19 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IPost, IPostMinimal, PostService } from '../../services/post.service';
 import { Id } from '../../app.config';
 import { CommonModule } from '@angular/common';
 import { IProfile, ProfileService } from '../../services/profile.service';
 import _ from 'lodash';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
-  selector: 'app-create-post',
+  selector: 'app-post',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './create-post.component.html',
-  styleUrl: './create-post.component.scss'
+  templateUrl: './post.component.html',
+  styleUrl: './post.component.scss'
 })
-export class CreatePostComponent {
+export class PostComponent {
+  route: ActivatedRoute = inject(ActivatedRoute);
+  public thisPost!: IPost;
+  public thisPostUserName!: string;
+
   public posts: IPostMinimal[] = [];
   public postUsers: IProfile[] = [];
 
@@ -28,21 +33,15 @@ export class CreatePostComponent {
   }
 
   async ngOnInit() {
+    const postId = Number((await firstValueFrom(this.route.paramMap)).get('id'));
+    this.thisPost = await this.postService.getPost(postId);
     await this.getRecentPosts();
-  }
-
-  public async savePost(title: string, content: string) {
-    const id: Id = await this.postService.makePost(title, content);
-    console.log(id);
-  }
-
-  public cancelPost() {
-    this.router.navigateByUrl("");
+    this.thisPostUserName = this.getUserFromPostUsers(this.thisPost.userId);
   }
 
   private async getRecentPosts() {
     this.posts = await this.postService.getRecentPosts();
-    this.postUsers = await this.profileService.getProfiles(_.uniq(this.posts.map(p => p.userId)));
+    this.postUsers = await this.profileService.getProfiles(_.uniq(this.posts.map(p => p.userId)).concat([this.thisPost.userId]));
     this.displayPosts = this.posts.map(p => {
       return {
         ...p,
@@ -55,7 +54,8 @@ export class CreatePostComponent {
     return this.postUsers.find(p => p.id == id)?.username ?? "user not found";
   }
 
-  public goToPost(id: Id) {
-    this.router.navigateByUrl("post/"+id);
+  public async goToPost(id: Id) {
+    await this.router.navigateByUrl("post/"+id);
+    window.location.reload();
   }
 }

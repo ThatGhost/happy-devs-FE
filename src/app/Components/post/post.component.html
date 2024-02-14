@@ -1,11 +1,12 @@
-<section class = "create-post">
+<section class = "root">
     <section class = "post">
-        <h2>Title</h2>
-        <input #title type="text" class = "title" max="256">
-        <h2 style = "margin-top: 1%;">Post</h2>
-        <textarea #content class = "content" maxlength="2000"></textarea>
-        <button class = "save" (click)="savePost(title.value, content.value)">Ask</button>    
-        <button class = "cancel" (click)="cancelPost()">Cancel</button>    
+        <h1>{{thisPostUserName}} {{this.thisPost.at}}</h1>
+        <h2 #title type="text" class = "title" max="256">{{thisPost.title}}</h2>
+        <p #content class = "content" maxlength="2000">{{thisPost.content}}</p>
+        <h3>Comments</h3>
+        <section class = "comments">
+
+        </section>
     </section>
     <section class = "other-posts">
         <h2>Recent posts</h2>

@@ -4,6 +4,7 @@ import { ProfileComponent } from './Components/profile/profile.component';
 import { LoginComponent } from './Components/login/login.component';
 import { SignupComponent } from './Components/signup/signup.component';
 import { CreatePostComponent } from './Components/create-post/create-post.component';
+import { PostComponent } from './Components/post/post.component';
 
 export const routes: Routes = [{
     path: '',
@@ -18,15 +19,19 @@ export const routes: Routes = [{
 {
     path: 'login',
     component: LoginComponent,
-    title: 'login'
+    title: 'Login'
 },
 {
     path: 'signup',
     component: SignupComponent,
-    title: 'signup'
+    title: 'Signup'
 }, 
 {
     path: 'create-post',
     component: CreatePostComponent,
-    title: 'create-post'
+    title: 'Create a post'
+}, {
+    path: 'post/:id',
+    component: PostComponent,
+    title: 'Post'
 }];

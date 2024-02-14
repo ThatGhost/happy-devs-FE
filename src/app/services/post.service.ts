@@ -24,11 +24,28 @@ export class PostService {
     return id;
   }
 
-  public async getRecentPosts(): Promise<IPost[]> {
+  public async getRecentPosts(): Promise<IPostMinimal[]> {
     if (!this.userService.isUserLoggedIn()) return [];
 
-    const raw: IPostData[] =  await this.api.get<IPostData[]>(`Posts/recent`);
-    return raw.map(this.toIPost);
+    const raw: IPostMinimalData[] =  await this.api.get<IPostMinimalData[]>(`Posts/recent`);
+    return raw.map(this.toIPostMinimal);
+  }
+
+  public async getPost(id: Id): Promise<IPost> {
+    if (!this.userService.isUserLoggedIn()) throw new Error('UserNotLoggedIn');
+
+    const raw: IPostData =  await this.api.get<IPostData>(`Posts/${id}`);
+    return this.toIPost(raw);
+  }
+
+  private toIPostMinimal(data: IPostMinimalData): IPostMinimal {
+    const atDate: Date = new Date(data.at);
+    return {
+      id: data.id,
+      userId: data.userId,
+      title: data.title,
+      at: getDateString(atDate),
+    }
   }
 
   private toIPost(data: IPostData): IPost {
@@ -37,24 +54,30 @@ export class PostService {
       id: data.id,
       userId: data.userId,
       title: data.title,
-      content: data.content ?? "",
       at: getDateString(atDate),
+      content: data.content ?? ""
     }
   }
 }
 
-interface IPostData {
+interface IPostMinimalData {
   id: Id,
   userId: Id,
   at: string,
   title: string,
+}
+
+interface IPostData extends IPostMinimalData {
   content: string | null,
 }
 
-export interface IPost {
+export interface IPostMinimal {
   id: Id,
   userId: Id,
   at: string,
   title: string,
+}
+
+export interface IPost extends IPostMinimal {
   content: string,
 }

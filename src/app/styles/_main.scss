@@ -13,8 +13,18 @@ $default-font: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     box-shadow: inset 0px 0px 5px $c-accent, 5px 5px 10px black;
 }
 
+@mixin accent-left {
+    border-left: medium solid $c-accent;
+    border-radius: 12px;
+}
+
 @mixin light-glow {
     border: medium solid $c-light;
     border-radius: 12px;
     box-shadow: inset 0px 0px 5px $c-light, 5px 5px 10px black;
+}
+
+@mixin light-left {
+    border-left: medium solid $c-light;
+    border-radius: 12px;
 }
