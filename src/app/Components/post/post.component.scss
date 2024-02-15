@@ -162,5 +162,10 @@
 
     .app-recent-posts {
         width: 20%;
+
+        @media screen and (max-width: 1000px) {
+            display: none;
+            width: 0%;
+        }
     }
 }

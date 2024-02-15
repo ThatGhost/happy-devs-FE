@@ -1,7 +1,18 @@
+@import "./app/styles/main";
 * { margin: 0; padding: 0 }
 
 
 html, body { height: 100%; }
 body { margin: 0; 
     font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    background: $c-dark;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $c-light;
+    border-radius: 5px;
 }

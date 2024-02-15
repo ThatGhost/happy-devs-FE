@@ -1,16 +1,23 @@
 @import "../../styles/main";
 
 .other-posts {
-    @media screen and (max-width: 1000px) {
-        display: none;
-        width: 0%;
+    height: 100%;
+    width: 100%;
+    height: red;
+
+    h2 {
+        height: 10%;
+        width: 100%;
     }
 
     ul {
+       height: 85%;
+       width: 100%;
        list-style-type: none;
-       
-        li {
+       overflow-y: auto;
+       padding-right: 5px;
 
+        li {
             .top {
                 display: flex;
                 flex-direction: row;
