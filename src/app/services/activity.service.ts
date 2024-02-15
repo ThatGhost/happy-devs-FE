@@ -50,6 +50,11 @@ export class ActivityService {
         activity.image = "/assets/news-icon.png";
         activity.link = ``;
         break;
+      case ActivityType.CommentedOnPost: 
+        activity.title = "Commented On Post!";
+        activity.image = "/assets/comment-icon.png";
+        activity.link = ``;
+        break;
     }
     
     return activity;
@@ -64,9 +69,10 @@ interface IActivityData {
 export enum ActivityType {
   UpdatedProfile = 0,
   MadePost = 1,
-  AskedQuestion = 2,
-  AwnseredQuestion = 3,
-  UpdatedDocumentation = 4,
+  CommentedOnPost = 2,
+  AskedQuestion = 3,
+  AwnseredQuestion = 4,
+  UpdatedDocumentation = 5,
 }
 
 export interface IActivity {

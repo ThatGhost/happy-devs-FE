@@ -107,3 +107,9 @@ export interface IProfile {
   title : string,
   id : Id
 }
+export const defaultProfile: IProfile = {
+  bio: "",
+  username: "",
+  title: "",
+  id: 0,
+}

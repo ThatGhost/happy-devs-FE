@@ -1,21 +1,33 @@
 <section class = "root">
     <section class = "post">
-        <h1>{{thisPostUser.username}} - {{this.thisPost.at}}</h1>
-        <h2 type="text" class = "title" max="256">{{thisPost.title}}</h2>
-        <p class = "content">{{thisPost.content}}</p>
+        <h1>{{getUsername(this.post.userId)}} - {{this.post.at}}</h1>
+        <h2 type="text" class = "title" max="256">{{post.title}}</h2>
+        <p class = "content">{{post.content}}</p>
         <h3>Comments</h3>
         <section class = "comments">
             <div *ngIf = '!writingComment' class = "comment-button">
                 <button (click)="addComment()"></button>
                 <img src = "/assets/comment-icon.png">
             </div>
-            <div *ngIf = 'writingComment' class = "comment">
+            <div *ngIf = 'writingComment' class = "comment-writing">
                 <textarea #commentArea (input)="onTextAreChange()" maxlength="2000">Your comment here</textarea>
                 <div class = "buttons">
-                    <button class = "save" (click)="saveComment()">Save</button>
+                    <button class = "save" (click)="saveComment(commentArea.value)">Save</button>
                     <button class = "cancel" (click)="cancelComment()">Cancel</button>
                 </div>
             </div>
+            <ul>
+                <li *ngFor="let comment of post.comments">
+                    <div class = "divider"></div>
+                    <div class = "top">
+                        <div class = "left">
+                            <h3>{{getUsername(comment.userId)}}</h3>
+                            <h4>{{comment.content}}</h4>
+                        </div>
+                        <p>{{comment.at}}</p>    
+                    </div>
+                </li>
+            </ul>        
         </section>
     </section>
     <app-recent-posts class = "app-recent-posts"></app-recent-posts>

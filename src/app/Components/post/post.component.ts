@@ -1,11 +1,12 @@
 import { Component, ElementRef, ViewChild, inject } from '@angular/core';
-import { IPost, PostService } from '../../services/post.service';
+import { IPost, PostService, defaultPost } from '../../services/post.service';
 import { CommonModule } from '@angular/common';
-import { IProfile, ProfileService } from '../../services/profile.service';
+import { IProfile, ProfileService, defaultProfile } from '../../services/profile.service';
 import _ from 'lodash';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { RecentPostsComponent } from '../recent-posts/recent-posts.component';
+import { Id } from '../../app.config';
 
 @Component({
   selector: 'app-post',
@@ -16,10 +17,10 @@ import { RecentPostsComponent } from '../recent-posts/recent-posts.component';
 })
 export class PostComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
-  public thisPost!: IPost;
-  public thisPostUser!: IProfile;
+  public post: IPost = defaultPost;
+  public commentUsers: IProfile[] = [];
 
-  public writingComment: boolean = true;
+  public writingComment: boolean = false;
 
   @ViewChild('commentArea') commentTextArea!: ElementRef;
 
@@ -32,8 +33,8 @@ export class PostComponent {
 
   async ngOnInit() {
     const postId = Number((await firstValueFrom(this.route.paramMap)).get('id'));
-    this.thisPost = await this.postService.getPost(postId);
-    this.thisPostUser = (await this.profileService.getProfiles([this.thisPost.userId]))[0];
+    this.post = await this.postService.getPost(postId) ?? defaultPost;
+    this.commentUsers = await this.profileService.getProfiles(this.post.comments.map(c => c.userId).concat([this.post.userId]));
   }
 
   onTextAreChange() {
@@ -50,7 +51,13 @@ export class PostComponent {
     this.writingComment = false;
   }
 
-  saveComment() {
+  async saveComment(content: string) {
     this.writingComment = false;
+    await this.postService.createComment(content, this.post.id);
+    window.location.reload();
+  }
+
+  getUsername(userId: Id): string {
+    return this.commentUsers.find(c => c.id === userId)?.username ?? "user not found";
   }
 }

@@ -24,6 +24,13 @@ export class PostService {
     return id;
   }
 
+  public async createComment(content: string, postId: Id): Promise<void> {
+    await this.api.put(`Posts/comment/${this.userService.getUserId()}`, {
+      content: content,
+      postId: postId
+    });
+  }
+
   public async getRecentPosts(): Promise<IPostMinimal[]> {
     if (!this.userService.isUserLoggedIn()) return [];
 
@@ -31,8 +38,8 @@ export class PostService {
     return raw.map(this.toIPostMinimal);
   }
 
-  public async getPost(id: Id): Promise<IPost> {
-    if (!this.userService.isUserLoggedIn()) throw new Error('UserNotLoggedIn');
+  public async getPost(id: Id): Promise<IPost | null> {
+    if (!this.userService.isUserLoggedIn()) return null;
 
     const raw: IPostData =  await this.api.get<IPostData>(`Posts/${id}`);
     return this.toIPost(raw);
@@ -49,14 +56,22 @@ export class PostService {
   }
 
   private toIPost(data: IPostData): IPost {
-    const atDate: Date = new Date(data.at);
+    const atDate: Date = new Date(data.at);    
     return {
       id: data.id,
       userId: data.userId,
       title: data.title,
       at: getDateString(atDate),
       content: data.content ?? "",
-      comments: data.comments,
+      comments: data.comments.map(c => {
+        const commentDate: Date = new Date(c.at);
+        return {
+          content: c.content,
+          id: c.id,
+          userId: c.userId,
+          at: getDateString(commentDate)  
+        }
+      }),
     }
   }
 }
@@ -91,6 +106,15 @@ export interface IPost extends IPostMinimal {
   content: string,
   comments: IPostComment[]
 }
+
+export const defaultPost: IPost = {
+  title: "",
+  comments: [],
+  content: "",
+  userId: 0,
+  id: 0,
+  at: "",
+};
 
 export interface IPostComment {
   id: Id,
