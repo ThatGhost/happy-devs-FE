@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './Components/home/home.component';
-import { ProfileComponent } from './Components/profile/profile.component';
-import { LoginComponent } from './Components/login/login.component';
-import { SignupComponent } from './Components/signup/signup.component';
-import { CreatePostComponent } from './Components/create-post/create-post.component';
-import { PostComponent } from './Components/post/post.component';
+import { HomeComponent } from './Components/pages/home/home.component';
+import { ProfileComponent } from './Components/pages/profile/profile.component';
+import { LoginComponent } from './Components/pages/login/login.component';
+import { SignupComponent } from './Components/pages/signup/signup.component';
+import { CreatePostComponent } from './Components/pages/create-post/create-post.component';
+import { PostComponent } from './Components/pages/post/post.component';
 
 export const routes: Routes = [{
     path: '',

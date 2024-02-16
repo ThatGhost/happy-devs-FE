@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { HeaderComponent } from '../Components/header/header.component';
+import { HeaderComponent } from '../Components/standalone/header/header.component';
 import { RouterModule } from '@angular/router';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
-import { SidenavComponent } from '../Components/sidenav/sidenav.component';
+import { SidenavComponent } from '../Components/standalone/sidenav/sidenav.component';
 import { SideNavService } from '../services/sidenav.service';
 
 @Component({

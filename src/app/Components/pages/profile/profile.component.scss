@@ -1,0 +1,266 @@
+@import "../../../styles/main";
+@import "../../../styles/image";
+
+.profile {
+    margin-left: 2%;
+    margin-right: 2%;
+    padding-top: 70px;
+
+    .top-grid {
+        width: 100%;
+        height: 60svh;
+        display: grid;
+        grid-template-columns: 3fr 2fr;
+        grid-template-rows: 1fr;
+        grid-gap: 20px;
+
+        @media screen and (max-width: 600px) {
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr 1fr;
+            height: 90svh;
+        }
+
+        .personal {
+            @include accent-glow;
+
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        
+            display: flex;
+            flex-direction: column;
+    
+            .starrednight {
+                @include fadeBottom(70%);
+            
+                position: absolute;
+                margin-top: -100px;
+                
+                transform: translate(-50%, 0);
+                left: 50%;
+                width: 100%;
+            }
+    
+            .top {
+                display: flex;
+                margin-top: 10%;
+                z-index: 1;
+                width: 100%;
+                height: 30%;
+                justify-content: start;
+
+                @media screen and (max-width: 600px) {
+                    margin-top: 7%;
+                }        
+    
+                .pictureContainer {
+                    height: 100%;
+                    min-width: 15%;
+                    margin-left: 5%;
+                    margin-right: 2%;
+                    position: relative;
+
+                    .profilePicture {
+                        height: 100%;
+                        border: 5px solid $c-light;
+                        border-radius: 15px;
+
+                        ::after {
+                            content: "";
+                            display: block;
+                            padding-left: 100%;
+                        }
+                    }
+
+                    .edit {
+                        height: 20px;
+                        width: 20px;
+                        position: absolute;
+                        padding: 5px;
+                        border-radius: 10px;
+                        border: 1px solid $c-dark;
+                        background-color: $c-light;
+                        bottom: -20px;
+                        right: -20px;
+
+                        img {
+                            height: 100%;
+                            width: 100%;
+                        }
+
+                        input {
+                            visibility: hidden;
+                        }
+                    }
+                }
+    
+                .nameAndTitle {
+                    position: relative;
+                    min-height: 30px;
+                    padding-top: 3%;
+                    
+                    .username {
+                        font-size: 50px;
+                    }
+
+                    .title {
+                        font-size: medium;
+                        margin-left: 20px;
+                    }
+
+                    .edit {
+                        height: 20px;
+                        position: absolute;
+                        top: 5px;
+                        right: -20px;
+                        padding: 5px;
+                        border-radius: 10px;
+                        border: 1px solid $c-dark;
+                        background-color: $c-light;
+                    }
+                }
+            }
+    
+            .bio {
+                margin-left: 5%;
+                margin-right: 5%;
+                margin-top: 20px;
+                z-index: 1;
+                height: 100%;
+                position: relative;
+
+                font-size: medium;
+            
+                display: flex;
+                flex-direction: column;
+    
+                .icon {
+                    width: 30px;
+                    height: 30px;
+
+                    @media screen and (max-width: 600px) {
+                        display: none;
+                    }            
+                }
+    
+                .title {
+                    margin-left: 0.5%;
+
+                    @media screen and (max-width: 600px) {
+                        display: none;
+                    }            
+                }
+
+                .edit {
+                    position: absolute;
+                    right: 0;
+                    height: 20px;
+                    width: 20px;
+                    padding: 5px;
+                    border-radius: 10px;
+                    border: 1px solid $c-dark;
+                    background-color: $c-light;
+                }
+    
+                .text {
+                    @include light-glow;
+                
+                    padding: 10px 50px 10px 10px;
+                    height: 100%;
+                    
+                    font-size: 18px;
+                    background-color: $c-dark;
+
+                    @media screen and (max-width: 600px) {
+                        font-size: 14px;
+                    }            
+                }
+            }
+        }  
+        
+        .activity-feed {
+            @include accent-glow;
+            padding: 20px;
+            padding-bottom: 30px;
+
+            @media screen and (max-width: 600px) {
+                padding-bottom: 15px;
+            }
+                
+            .titleAndIcon {
+                height: 10%;
+                width: 100%;
+                @media screen and (max-width: 600px) {
+                    display: none;
+                }
+
+                .icon {
+                    height: 40px;
+                    float: left;
+                }
+    
+                .title {
+                    margin-top: 5px;
+                    margin-left: 5px;
+                    float: left;
+                }    
+            }
+
+            .list {
+                padding-left: 20px;
+                padding-top: 10px;
+                list-style: none;
+                height: 90%;
+                @include light-glow();
+
+                overflow-y: auto;
+
+                .item {
+                    margin-top: 10px; 
+                    display: flex;
+                    flex-direction: column;
+
+                    img {
+                        width: 40px;
+                        height: 40px;
+                    }
+
+                    .text {
+                        display: flex;
+                        flex-direction: column;
+                        margin-left: 20px;
+
+                        p {
+                            font-size: large;
+                            margin: 0;
+                        }
+    
+                        a {
+                            font-size: small;
+                            margin-left: 10px;
+                            color: $c-white;
+                            text-decoration: none;
+                        }
+                    }
+
+                    .divider {
+                        border-bottom: 1px solid $c-light;
+                        box-shadow: 0px 0px 5px $c-light, inset 0px 0px 5px $c-light;
+                        margin-top: 10px;
+                        margin-right: 20px;
+                        margin-left: 10px;
+                    }
+                }
+            }
+        }
+    }
+
+    .graph {
+        @include accent-glow;
+    
+        margin-top: 1%;
+        width: 99%;
+        height: 30svh;
+        padding: 0.5% 0.5% 0.5% 0.5%;
+    }
+}

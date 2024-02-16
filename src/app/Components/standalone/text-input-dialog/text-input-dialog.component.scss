@@ -1,0 +1,36 @@
+@import "../../../styles/main";
+
+.input-dialog {
+    background-color: $c-medium;
+    min-height: 100px;
+    min-width: 250px;
+    border: 5px solid $c-light;
+    border-radius: 5px;
+    position: relative;
+
+    padding: 20px;
+
+    .title {
+        color: $c-white;
+    }
+
+    .input {
+        width: 75%;
+        margin-right: 5px;
+        background-color: $c-dark;
+        color: $c-white;
+        font-size: large;
+        font-family:$default-font;
+    }
+
+    .submit {
+        position: absolute;
+        height: 20%;
+        background-color: $c-dark;
+        @include light-glow;
+        color: $c-white;
+        padding: 5px;
+        bottom: 10px;
+        right: 10px;
+    }
+}
