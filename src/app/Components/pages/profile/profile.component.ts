@@ -83,7 +83,7 @@ export class ProfileComponent {
     let i: number = 0;
     while(!areDatesEqual(currentDate, now)) {
       allLabels.push(getDateString(currentDate))
-      //allData.push(_.random(true) * 15);
+
       allData.push(_.filter(this.activities, a => areDatesEqual(a.at, currentDate)).length);
 
       currentDate.setDate(currentDate.getDate() + 1);
@@ -162,7 +162,7 @@ export class ProfileComponent {
     <button class = "submit" (click)="onSubmit(username.value, title.value)">Submit</button>    
 </section>`,
   styles: `
-    @import "../../styles/main";
+    @import "../../../styles/main";
 
     .input-dialog {
       background-color: $c-medium;

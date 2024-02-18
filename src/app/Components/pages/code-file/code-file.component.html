@@ -1,0 +1,13 @@
+<section class = "code-file">
+    <div class = "container">
+        <section class = "folder-navigation">
+            <h2>Navigation</h2>
+        </section>
+        <section class = "file-navigation">
+            <h2>{{fileTitle}}</h2>
+            <pre>
+                <code *ngFor = 'let line of code.split("\n")'>{{replacetabs(line)}}</code>
+            </pre>
+        </section>    
+    </div>
+</section>

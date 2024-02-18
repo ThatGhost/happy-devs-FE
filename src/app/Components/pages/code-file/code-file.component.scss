@@ -1,0 +1,56 @@
+@import '../../../styles/main';
+
+.code-file {
+    padding-top: $header-height;
+
+    .container {
+        padding: 2%;
+        padding-top: 20px;
+        display: flex;
+        flex-direction: row;
+
+        .folder-navigation {
+            width: 30%;
+            margin-right: 3%;
+            @include light-glow;
+            padding: 1%;
+        }
+
+        .file-navigation {
+            width: 60%;
+            @include light-glow;
+            padding: 1%;
+            
+            h2 {
+                margin-left: 20px;
+            }
+
+            pre {
+                padding: 10px;
+                counter-reset: line;
+                color: $c-white;
+
+                background-color: rgb(4, 3, 18);
+                border-radius: 12px;
+                display: flex;
+                flex-direction: column;
+                white-space: pre;
+
+                code {
+                    counter-increment: line;
+                    width: 100%;
+                    border-bottom: 1px solid rgba($color: $c-light, $alpha: 0.2);
+
+                    &::before {
+                        content: counter(line);
+                        content: counter(line);
+                        display: inline-block;
+                        width: 2.5em;
+                        text-align: right;
+                        margin-right: 0.5em;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -3,7 +3,7 @@
 header {
     position: fixed;
     top: 0;
-    height: 50px;
+    height: $header-height;
     width: 100%;
     background-color: $c-dark;
     padding: 5px;
