@@ -48,6 +48,11 @@ export class SidenavComponent {
     this.closeSideNav();
   }
 
+  public goToDocumentation() {
+    this.router.navigateByUrl("code");
+    this.closeSideNav();
+  }
+
   public openPFP() {
     window.open("https://i.kym-cdn.com/photos/images/newsfeed/001/698/917/183.jpg", "_blank")
   }

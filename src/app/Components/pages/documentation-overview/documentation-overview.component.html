@@ -1,0 +1,15 @@
+<section class = "document-overview">
+    <section class = "list">
+        <h1 (click) = "openPreviousFolder(this.currentFolder.parentFolder)">../{{currentFolder.title}}</h1>
+        <ul>
+            <li *ngFor = "let folder of currentFolder.folders">
+                <img src = "/assets/folder-icon.png">
+                <h2 (click) = "openFolder(folder.title)">{{folder.title}}</h2>
+            </li>
+            <li *ngFor = "let file of currentFolder.files">
+                <img src = "/assets/file-icon.png">
+                <h2>{{file.title}}</h2>
+            </li>
+        </ul>
+    </section>
+</section>

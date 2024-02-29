@@ -6,6 +6,7 @@ import { SignupComponent } from './Components/pages/signup/signup.component';
 import { CreatePostComponent } from './Components/pages/create-post/create-post.component';
 import { PostComponent } from './Components/pages/post/post.component';
 import { CodeFileComponent } from './Components/pages/code-file/code-file.component';
+import { DocumentationOverviewComponent } from './Components/pages/documentation-overview/documentation-overview.component';
 
 export const routes: Routes = [{
     path: '',
@@ -39,4 +40,8 @@ export const routes: Routes = [{
     path: 'code/file/:id',
     component: CodeFileComponent,
     title: 'File'
+}, {
+    path: 'code',
+    component: DocumentationOverviewComponent,
+    title: 'Overview'
 }];
