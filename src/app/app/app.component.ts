@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { SidenavComponent } from '../Components/standalone/sidenav/sidenav.component';
 import { SideNavService } from '../services/sidenav.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-app',
@@ -16,7 +17,13 @@ import { SideNavService } from '../services/sidenav.service';
 export class AppComponent {
   @ViewChild("sidenav") sidenav!: MatSidenav;
 
-  constructor(private sidenavService: SideNavService) {    
+  constructor(
+    private sidenavService: SideNavService,
+    private readonly userService: UserService) {    
+  }
+
+  async ngOnInit() {
+    await this.userService.authenticateUser();
   }
 
   ngAfterViewInit(): void {

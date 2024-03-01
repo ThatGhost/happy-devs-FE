@@ -32,10 +32,11 @@ export class ProfileService {
     userService.userChange.subscribe((value) => {
       this.reloadProfile();
       this.loadProfilePicture();
-    })
+    });
   }
 
-  public getProfile(): IProfile {
+  public async getProfile(): Promise<IProfile> {
+    await this.loadProfile();
     return this.profile;
   }
 

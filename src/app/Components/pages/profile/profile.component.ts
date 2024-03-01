@@ -10,6 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivityService, IActivity } from '../../../services/activity.service';
 import _ from 'lodash';
 import { areDatesEqual, getDateString } from '../../../utils/dateUtils';
+import { userLoggedIn } from '../../../services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -49,11 +50,16 @@ export class ProfileComponent {
         this.profileImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
       }
     });
+    userLoggedIn.subscribe(() => this.loadProfile());
   }
 
-  async ngOnInit() {
+  async ngAfterContentInit() {
+    await this.loadProfile();
+  }
+
+  async loadProfile() {
     await this.profileService.loadProfilePicture();
-    const profile: IProfile = this.profileService.getProfile();
+    const profile: IProfile = await this.profileService.getProfile();
     this.bio = profile.bio;
     this.title = profile.title;
     this.username = profile.username;  

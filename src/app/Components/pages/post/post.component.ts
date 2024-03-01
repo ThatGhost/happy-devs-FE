@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { RecentPostsComponent } from '../../standalone/recent-posts/recent-posts.component';
 import { Id } from '../../../app.config';
+import { userLoggedIn } from '../../../services/user.service';
 
 @Component({
   selector: 'app-post',
@@ -27,11 +28,15 @@ export class PostComponent {
   public constructor(
     private readonly postService: PostService,
     private readonly profileService: ProfileService,
-    ) {
-
+  ) {
+    userLoggedIn.subscribe(() => this.getPost());
   }
-
-  async ngOnInit() {
+  
+  async ngAfterContentInit() {
+    await this.getPost();
+  }
+  
+  async getPost() {
     const postId = Number((await firstValueFrom(this.route.paramMap)).get('id'));
     this.post = await this.postService.getPost(postId) ?? defaultPost;
     this.commentUsers = await this.profileService.getProfiles(this.post.comments.map(c => c.userId).concat([this.post.userId]));

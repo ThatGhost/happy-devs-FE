@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CodeService, ICodeFolder, defaultCodeFolder } from '../../../services/code.service';
 import { CommonModule } from '@angular/common';
 import { Id } from '../../../app.config';
+import { userLoggedIn } from '../../../services/user.service';
 
 @Component({
   selector: 'app-documentation-overview',
@@ -16,10 +17,14 @@ export class DocumentationOverviewComponent {
   allFoldersFlatMap: ICodeFolder[] = [];
 
   public constructor(private readonly codeService: CodeService) {
-    
+    userLoggedIn.subscribe(() => this.getRoot());
   }
 
-  async ngOnInit() {
+  async ngAfterContentInit() {
+    await this.getRoot();
+  }
+
+  async getRoot() {
     this.root = await this.codeService.getRoot();
     this.currentFolder = this.root;
     this.flattenFolders(this.root);

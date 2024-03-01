@@ -5,6 +5,8 @@ import { ApiService } from './api.service';
 import { isPlatformBrowser } from '@angular/common';
 import { Subject } from 'rxjs';
 
+export const userLoggedIn: Subject<void> = new Subject<void>();
+
 @Injectable({
   providedIn: 'root'
 })
@@ -23,17 +25,7 @@ export class UserService {
     @Inject(PLATFORM_ID) private readonly _platformId: Object
   ) 
   {
-    // check localStorage
-    this.isBrowser = isPlatformBrowser(_platformId);
-
-    if (this.isBrowser) {
-      const token: string | null = localStorage.getItem(this.localStorageKey);
-      if(token !== null) {
-        api.setToken(token);
-        this.loggedIn = true;
-        this.userId = Number(token.substring(0, token.indexOf(":")));
-      }  
-    }
+    this.isBrowser = isPlatformBrowser(this._platformId);
   }
 
   public isUserLoggedIn(): boolean {
@@ -55,7 +47,10 @@ export class UserService {
     this.loggedIn = true;
     this.api.setToken(token.token);
     this.router.navigateByUrl("");
-    if (this.isBrowser) localStorage.setItem(this.localStorageKey, token.token);
+    if (this.isBrowser) {
+      localStorage.removeItem(this.localStorageKey);
+      localStorage.setItem(this.localStorageKey, token.token);
+    }
   }
 
   public async signUp(UserName: string, email: string, password: string): Promise<void> {
@@ -73,5 +68,25 @@ export class UserService {
     this.userId = 0;
     this.api.setToken('');
     if (this.isBrowser) localStorage.removeItem(this.localStorageKey);
+  }
+
+  public async authenticateUser() {
+    if (this.isBrowser) {
+      const token: string | null = localStorage.getItem(this.localStorageKey);
+
+      if(token !== null) {
+        this.api.setToken(token);
+        const isAuth: boolean = await this.api.get<boolean>('Users/auth');
+
+        if(isAuth) {
+          this.loggedIn = true;
+          this.userId = Number(token.substring(0, token.indexOf(":")));  
+          userLoggedIn.next();
+        } else {
+          this.loggedIn = false;
+          localStorage.removeItem(this.localStorageKey);
+        }
+      }  
+    }
   }
 }

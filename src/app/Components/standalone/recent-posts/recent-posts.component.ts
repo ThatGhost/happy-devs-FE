@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import _ from 'lodash';
+import { userLoggedIn } from '../../../services/user.service';
 
 @Component({
   selector: 'app-recent-posts',
@@ -27,10 +28,10 @@ export class RecentPostsComponent {
     private readonly profileService: ProfileService,
     private readonly router: Router,
     ) {
-
+      userLoggedIn.subscribe(() => this.getRecentPosts());
   }
 
-  async ngOnInit() {
+  async ngAfterContentInit() {
     await this.getRecentPosts();
   }
 

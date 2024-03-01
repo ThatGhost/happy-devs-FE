@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { SideNavService } from '../../../services/sidenav.service';
 import { Router, RouterModule } from '@angular/router';
-import { UserService } from '../../../services/user.service';
+import { UserService, userLoggedIn } from '../../../services/user.service';
 import { Id } from '../../../app.config';
 import { ProfileService } from '../../../services/profile.service';
 
@@ -55,9 +55,5 @@ export class SidenavComponent {
 
   public openPFP() {
     window.open("https://i.kym-cdn.com/photos/images/newsfeed/001/698/917/183.jpg", "_blank")
-  }
-
-  async ngOnInit() {
-    this.profileService.loadProfile();
   }
 }
