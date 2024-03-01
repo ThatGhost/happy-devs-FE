@@ -51,6 +51,7 @@ export class UserService {
       localStorage.removeItem(this.localStorageKey);
       localStorage.setItem(this.localStorageKey, token.token);
     }
+    userLoggedIn.next();
   }
 
   public async signUp(UserName: string, email: string, password: string): Promise<void> {
